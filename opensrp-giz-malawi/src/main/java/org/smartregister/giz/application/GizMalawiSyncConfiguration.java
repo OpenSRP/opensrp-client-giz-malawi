@@ -87,6 +87,11 @@ public class GizMalawiSyncConfiguration extends SyncConfiguration {
     }
 
     @Override
+    public boolean shouldPushToServer() {
+        return false;
+    }
+
+    @Override
     public String getSettingsSyncFilterValue() {
         AllSharedPreferences sharedPreferences = AncLibrary.getInstance().getContext().userService().getAllSharedPreferences();
         String providerId = sharedPreferences.fetchRegisteredANM();

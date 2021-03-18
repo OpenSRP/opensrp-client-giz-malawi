@@ -186,7 +186,7 @@ public class GizJsonFormUtils extends ChildJsonFormUtils {
         return "";
     }
 
-    public static JSONObject getJsonObject(JSONObject jsonObject, String field) {
+    public static JSONObject getGizJsonObject(JSONObject jsonObject, String field) {
         try {
             if (jsonObject != null && jsonObject.has(field)) {
                 return jsonObject.getJSONObject(field);

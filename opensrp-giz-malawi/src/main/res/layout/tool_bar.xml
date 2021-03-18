@@ -5,49 +5,65 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
+        android:id="@+id/top_left_layout"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="10dp"
+        android:layout_centerVertical="true">
+
+        <!-- These two views here are mandatory in Child & adding them prevents crashes -->
+        <ImageView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            android:id="@+id/scanQrCode"/>
+        <ImageView
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            android:id="@+id/sync_refresh"/>
+
+        <!-- END of useless child views -->
+
+        <ImageView
+            android:id="@+id/left_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="3dp"
+            android:gravity="center"
+            android:src="@drawable/ic_action_menu" />
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/customAppThemeBlue"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        android:paddingRight="0dp"
-        android:paddingEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginEnd="0dp"
-        tools:layout_editor_absoluteX="-10dp"
-        tools:layout_editor_absoluteY="2dp">
+        android:layout_height="match_parent"
+        android:layout_margin="0dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="0dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/title_child"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/register_client"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/title_child"
-                    android:textColor="@color/white"
-                    android:textSize="22sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/register_client"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <ImageButton
+            android:id="@+id/register_client"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/transparent_gray_background"
+            android:paddingStart="22dp"
+            android:src="@drawable/ic_add"
+            app:layout_constraintRight_toRightOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/register_client"
-                    android:layout_width="wrap_content"
-                    android:layout_height="33dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:background="@drawable/transparent_gray_background"
-                    android:paddingStart="22dp"
-                    android:src="@drawable/ic_add"
-                    app:layout_constraintRight_toRightOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.appcompat.widget.Toolbar>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

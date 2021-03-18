@@ -20,6 +20,7 @@ import org.smartregister.giz.util.GizUtils;
 import org.smartregister.maternity.utils.MaternityConstants;
 import org.smartregister.maternity.utils.MaternityDbConstants;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -130,7 +131,7 @@ public class GizMaternityPncTransferProcessor implements ClientTransferProcessor
                     }
                 }
             }
-        } catch (JSONException e) {
+        } catch (JSONException | IOException e) {
             Timber.e(e);
         }
         return jsonForm;

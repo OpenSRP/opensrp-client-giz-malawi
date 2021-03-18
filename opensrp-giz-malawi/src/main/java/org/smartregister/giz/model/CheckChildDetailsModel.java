@@ -80,7 +80,7 @@ public class CheckChildDetailsModel {
         this.lostToFollowUp = "";
 
         if (client.has(GizConstants.KEY.CHILD)) {
-            JSONObject child = GizJsonFormUtils.getJsonObject(client, GizConstants.KEY.CHILD);
+            JSONObject child = GizJsonFormUtils.getGizJsonObject(client, GizConstants.KEY.CHILD);
 
             // Skip deceased children
             if (StringUtils.isNotBlank(GizJsonFormUtils.getJsonString(child, GizConstants.KEY.DEATHDATE))) {
@@ -105,13 +105,13 @@ public class CheckChildDetailsModel {
                 }
             }
 
-            zeirId = GizJsonFormUtils.getJsonString(GizJsonFormUtils.getJsonObject(child, GizConstants.KEY.IDENTIFIERS), ChildJsonFormUtils.ZEIR_ID);
+            zeirId = GizJsonFormUtils.getJsonString(GizJsonFormUtils.getGizJsonObject(child, GizConstants.KEY.IDENTIFIERS), ChildJsonFormUtils.ZEIR_ID);
             if (StringUtils.isNotBlank(zeirId)) {
                 zeirId = zeirId.replace("-", "");
             }
 
-            inactive = GizJsonFormUtils.getJsonString(GizJsonFormUtils.getJsonObject(child, GizConstants.KEY.ATTRIBUTES), GizConstants.KEY.INACTIVE);
-            lostToFollowUp = GizJsonFormUtils.getJsonString(GizJsonFormUtils.getJsonObject(child, GizConstants.KEY.ATTRIBUTES), GizConstants.KEY.LOST_TO_FOLLOW_UP);
+            inactive = GizJsonFormUtils.getJsonString(GizJsonFormUtils.getGizJsonObject(child, GizConstants.KEY.ATTRIBUTES), GizConstants.KEY.INACTIVE);
+            lostToFollowUp = GizJsonFormUtils.getJsonString(GizJsonFormUtils.getGizJsonObject(child, GizConstants.KEY.ATTRIBUTES), GizConstants.KEY.LOST_TO_FOLLOW_UP);
         }
         myResult = false;
         return this;
