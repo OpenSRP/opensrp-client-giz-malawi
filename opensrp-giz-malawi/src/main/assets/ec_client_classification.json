@@ -18,7 +18,8 @@
             "field_value": "Birth Registration",
             "creates_case": [
               "ec_client",
-              "ec_child_details"
+              "ec_child_details",
+              "ec_family_member_location"
             ]
           },
           {
@@ -259,6 +260,13 @@
             "field_value": "opd_child_transfer",
             "creates_case": [
               "ec_child_details"
+            ]
+          },
+          {
+            "field": "eventType",
+            "field_value": "Reason For Defaulting",
+            "creates_case": [
+              "reason_for_defaulting"
             ]
           }
         ]

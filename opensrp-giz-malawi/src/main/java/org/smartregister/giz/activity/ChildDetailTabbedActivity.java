@@ -11,14 +11,19 @@ import com.vijay.jsonwizard.domain.Form;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.smartregister.AllConstants;
+import org.smartregister.CoreLibrary;
 import org.smartregister.child.activity.BaseChildDetailTabbedActivity;
 import org.smartregister.child.fragment.StatusEditDialogFragment;
 import org.smartregister.child.task.LoadAsyncTask;
 import org.smartregister.child.util.ChildDbUtils;
+import org.smartregister.child.util.ChildJsonFormUtils;
 import org.smartregister.giz.R;
 import org.smartregister.giz.fragment.ChildRegistrationDataFragment;
+import org.smartregister.giz.task.SaveReasonForDefaultingEventTask;
+import org.smartregister.giz.util.GizConstants;
 import org.smartregister.giz.util.GizJsonFormUtils;
 import org.smartregister.giz.util.GizUtils;
 import org.smartregister.util.FormUtils;
@@ -49,7 +54,6 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
         super.attachBaseContext(setAppLocale(base, lang));
     }
 
-
     @Override
     public void onUniqueIdFetched(Triple<String, Map<String, String>, String> triple, String s) {
         //do thing
@@ -69,6 +73,8 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
         super.onCreateOptionsMenu(menu);
         overflow.findItem(org.smartregister.child.R.id.register_card).setVisible(false);
         overflow.findItem(org.smartregister.child.R.id.write_to_card).setVisible(false);
+        overflow.findItem(R.id.reason_for_defaulting).setVisible(true);
+
         return true;
     }
 
@@ -135,6 +141,10 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
             case R.id.report_adverse_event:
                 return launchAdverseEventForm();
 
+            case R.id.reason_for_defaulting:
+                String reasonForDefaulting = getReasonForDefaulting();
+                startFormActivity(reasonForDefaulting);
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -145,8 +155,22 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        try {
+            String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+            Timber.d(jsonString);
 
+            JSONObject form = new JSONObject(jsonString);
+            String encounterType = form.optString(ChildJsonFormUtils.ENCOUNTER_TYPE);
+            if (encounterType.equalsIgnoreCase(GizConstants.EventType.REASON_FOR_DEFAULTING)) {
+                new SaveReasonForDefaultingEventTask(jsonString, childDetails.entityId(), CoreLibrary.getInstance().context().getEventClientRepository())
+                        .run();
+
+            }
+        } catch (JSONException e) {
+            Timber.e(e, "Could not load the Form");
+        }
     }
+
 
     @Override
     protected void navigateToRegisterActivity() {
@@ -168,6 +192,17 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
         intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, formData);
 
         startActivityForResult(intent, REQUEST_CODE_GET_JSON);
+    }
+
+    private String getReasonForDefaulting() {
+        try {
+            JSONObject form = FormUtils.getInstance(getApplicationContext()).getFormJson(GizConstants.ReasonForDefaultingHelper.REPORT_REASON_FOR_DEFAULTING);
+            return form == null ? null : form.toString();
+
+        } catch (Exception e) {
+            Timber.e(e, "Failed to Instantiate Form");
+        }
+        return "";
     }
 
     @Override
@@ -202,3 +237,4 @@ public class ChildDetailTabbedActivity extends BaseChildDetailTabbedActivity {
         return "";
     }
 }
+

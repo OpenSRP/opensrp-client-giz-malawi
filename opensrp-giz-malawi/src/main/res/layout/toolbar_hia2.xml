@@ -61,7 +61,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_action_sync" />
+                android:src="@drawable/ic_action_sync"
+                android:visibility="gone"/>
 
             <View
                 android:id="@+id/separator_v"

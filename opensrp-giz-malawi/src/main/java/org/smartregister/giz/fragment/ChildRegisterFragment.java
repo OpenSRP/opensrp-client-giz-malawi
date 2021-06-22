@@ -2,10 +2,10 @@ package org.smartregister.giz.fragment;
 
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
 
 import org.smartregister.child.domain.RegisterClickables;
 import org.smartregister.child.fragment.BaseChildRegisterFragment;
@@ -20,7 +20,6 @@ import org.smartregister.giz.model.ChildRegisterFragmentModel;
 import org.smartregister.giz.presenter.ChildRegisterFragmentPresenter;
 import org.smartregister.giz.util.AppExecutors;
 import org.smartregister.giz.util.DBQueryHelper;
-import org.smartregister.giz.view.NavigationMenu;
 import org.smartregister.immunization.job.VaccineSchedulesUpdateJob;
 import org.smartregister.view.activity.BaseRegisterActivity;
 
@@ -77,7 +76,7 @@ public class ChildRegisterFragment extends BaseChildRegisterFragment implements 
         }
     }
 
-    private void initiateReportJob() {
+    protected void initiateReportJob() {
         Calendar calendar = Calendar.getInstance();
         if (calendar.get(Calendar.HOUR_OF_DAY) != 0 && calendar.get(Calendar.HOUR_OF_DAY) != 1) {
             calendar.set(Calendar.HOUR_OF_DAY, 1);
@@ -158,14 +157,20 @@ public class ChildRegisterFragment extends BaseChildRegisterFragment implements 
     @Override
     public void onResume() {
         super.onResume();
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setContentInsetsAbsolute(0, 0);
-        toolbar.setContentInsetsRelative(0, 0);
-        toolbar.setContentInsetStartWithNavigation(0);
-        toolbar.setNavigationIcon(R.drawable.ic_action_menu);
 
-        NavigationMenu.getInstance(getActivity(), null, toolbar);
+        ImageView hamburgerMenu = view.findViewById(R.id.left_menu);
+        if (hamburgerMenu != null) {
+            hamburgerMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (getActivity() instanceof ChildRegisterActivity) {
+                        ((ChildRegisterActivity) getActivity()).openDrawer();
+                    }
+                }
+            });
+        }
     }
+
 
     @Override
     protected String filterSelectionCondition(boolean urgentOnly) {
@@ -174,6 +179,7 @@ public class ChildRegisterFragment extends BaseChildRegisterFragment implements 
 
     @Override
     public void onClick(View view) {
+
         onViewClicked(view);
     }
 

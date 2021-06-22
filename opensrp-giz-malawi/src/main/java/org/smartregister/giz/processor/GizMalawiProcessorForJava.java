@@ -6,6 +6,8 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -27,6 +29,7 @@ import org.smartregister.clientandeventmodel.DateUtil;
 import org.smartregister.commonregistry.AllCommonsRepository;
 import org.smartregister.domain.Client;
 import org.smartregister.domain.Event;
+import org.smartregister.domain.Obs;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.jsonmapping.ClientClassification;
 import org.smartregister.domain.jsonmapping.ClientField;
@@ -34,9 +37,12 @@ import org.smartregister.domain.jsonmapping.Column;
 import org.smartregister.domain.jsonmapping.Table;
 import org.smartregister.giz.application.GizMalawiApplication;
 import org.smartregister.giz.domain.MonthlyTally;
+import org.smartregister.giz.model.ReasonForDefaultingModel;
 import org.smartregister.giz.repository.MonthlyTalliesRepository;
+import org.smartregister.giz.repository.ReasonForDefaultingRepository;
 import org.smartregister.giz.util.AppExecutors;
 import org.smartregister.giz.util.GizConstants;
+import org.smartregister.giz.util.GizReportUtils;
 import org.smartregister.giz.util.GizUtils;
 import org.smartregister.growthmonitoring.domain.Height;
 import org.smartregister.growthmonitoring.domain.Weight;
@@ -94,7 +100,7 @@ public class GizMalawiProcessorForJava extends ClientProcessorForJava {
             Constants.EventType.NEW_WOMAN_REGISTRATION, OpdConstants.EventType.OPD_REGISTRATION, OpdConstants.EventType.UPDATE_OPD_REGISTRATION,
             Constants.EventType.AEFI, Constants.EventType.ARCHIVE_CHILD_RECORD, ConstantsUtils.EventTypeUtils.ANC_MATERNITY_TRANSFER,
             ConstantsUtils.EventTypeUtils.CLOSE, GizConstants.EventType.OPD_CHILD_TRANSFER, GizConstants.EventType.OPD_MATERNITY_TRANSFER,
-            GizConstants.EventType.OPD_ANC_TRANSFER, GizConstants.EventType.OPD_PNC_TRANSFER);
+            GizConstants.EventType.OPD_ANC_TRANSFER, GizConstants.EventType.OPD_PNC_TRANSFER, GizConstants.EventType.REASON_FOR_DEFAULTING);
 
     private GizMalawiProcessorForJava(Context context) {
         super(context);
@@ -160,6 +166,8 @@ public class GizMalawiProcessorForJava extends ClientProcessorForJava {
                     processService(eventClient, serviceTable);
                 } else if (eventType.equals(ChildJsonFormUtils.BCG_SCAR_EVENT)) {
                     processBCGScarEvent(eventClient);
+                } else if (eventType.equals(GizConstants.EventType.REASON_FOR_DEFAULTING)) {
+                    clientProcessReasonForDefault(event);
                 } else if (eventType.equals(MoveToMyCatchmentUtils.MOVE_TO_CATCHMENT_EVENT)) {
                     unsyncEvents.add(event);
                 } else if (eventType.equalsIgnoreCase(Constants.EventType.DEATH)) {
@@ -908,4 +916,21 @@ public class GizMalawiProcessorForJava extends ClientProcessorForJava {
             clientsForAlertUpdates.put(baseEntityId, dateTime);
         }
     }
+
+    private void clientProcessReasonForDefault(Event event) throws JsonProcessingException {
+        if (event != null) {
+            List<Obs> reasonForDefaultingObs = event.getObs();
+            ReasonForDefaultingModel reasonForDefaultingModel = GizReportUtils.getReasonForDefaultingModel(reasonForDefaultingObs);
+            reasonForDefaultingModel.setDateCreated(event.getEventDate().toString());
+            reasonForDefaultingModel.setBaseEntityId(event.getBaseEntityId());
+            if (reasonForDefaultingModel != null) {
+                ReasonForDefaultingRepository repo = GizMalawiApplication.getInstance().reasonForDefaultingRepository();
+                String formSubmissionId = event.getFormSubmissionId();
+                reasonForDefaultingModel.setId(formSubmissionId);
+                repo.addOrUpdate(reasonForDefaultingModel);
+            }
+        }
+    }
+
+
 }

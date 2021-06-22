@@ -28,7 +28,7 @@ import com.github.ybq.android.spinkit.style.FadingCircle;
 import org.apache.commons.lang3.StringUtils;
 import org.smartregister.domain.FetchStatus;
 import org.smartregister.giz.R;
-import org.smartregister.giz.activity.ReportRegisterActivity;
+import org.smartregister.giz.activity.ReportTypeListRegisterActivity;
 import org.smartregister.giz.adapter.NavigationAdapter;
 import org.smartregister.giz.application.GizMalawiApplication;
 import org.smartregister.giz.contract.NavigationContract;
@@ -88,6 +88,12 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
             return instance;
         } else {
             return null;
+        }
+    }
+
+    public static void closeDrawer() {
+        if (instance != null && instance.getDrawer() != null) {
+            instance.getDrawer().closeDrawer(Gravity.START);
         }
     }
 
@@ -219,13 +225,13 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
     }
 
     private void startReportActivity(@Nullable Activity parentActivity) {
-        if (parentActivity instanceof ReportRegisterActivity) {
+        if (parentActivity instanceof ReportTypeListRegisterActivity) {
             drawer.closeDrawer(GravityCompat.START);
             return;
         }
 
         if (parentActivity != null) {
-            Intent intent = new Intent(parentActivity, ReportRegisterActivity.class);
+            Intent intent = new Intent(parentActivity, ReportTypeListRegisterActivity.class);
             parentActivity.startActivity(intent);
         }
     }
@@ -393,12 +399,6 @@ public class NavigationMenu implements NavigationContract.View, SyncStatusBroadc
 
     public void openDrawer() {
         drawer.openDrawer(GravityCompat.START);
-    }
-
-    public static void closeDrawer() {
-        if (instance != null && instance.getDrawer() != null) {
-            instance.getDrawer().closeDrawer(Gravity.START);
-        }
     }
 
     @Override

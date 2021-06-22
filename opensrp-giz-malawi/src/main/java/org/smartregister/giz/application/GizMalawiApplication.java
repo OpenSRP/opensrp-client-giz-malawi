@@ -66,6 +66,7 @@ import org.smartregister.giz.repository.GizHia2ReportRepository;
 import org.smartregister.giz.repository.GizMalawiRepository;
 import org.smartregister.giz.repository.HIA2IndicatorsRepository;
 import org.smartregister.giz.repository.MonthlyTalliesRepository;
+import org.smartregister.giz.repository.ReasonForDefaultingRepository;
 import org.smartregister.giz.util.AppExecutors;
 import org.smartregister.giz.util.GizConstants;
 import org.smartregister.giz.util.GizOpdRegisterProviderMetadata;
@@ -150,6 +151,7 @@ public class GizMalawiApplication extends DrishtiApplication implements TimeChan
     private ChildAlertUpdatedRepository childAlertUpdatedRepository;
     private GizEventRepository gizEventRepository;
     private AppExecutors appExecutors;
+    private ReasonForDefaultingRepository reasonForDefaultingRepository;
 
     public static JsonSpecHelper getJsonSpecHelper() {
         return jsonSpecHelper;
@@ -346,6 +348,7 @@ public class GizMalawiApplication extends DrishtiApplication implements TimeChan
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         initMinimumDateForReportGeneration();
+
     }
 
     private void initMinimumDateForReportGeneration() {
@@ -579,11 +582,11 @@ public class GizMalawiApplication extends DrishtiApplication implements TimeChan
 
     @VisibleForTesting
     protected void fixHardcodedVaccineConfiguration() {
-        VaccineRepo.Vaccine[] vaccines = ImmunizationLibrary.getInstance().getVaccines();
+        VaccineRepo.Vaccine[] vaccines = ImmunizationLibrary.getInstance().getVaccines(GizConstants.KEY.CHILD);
 
         HashMap<String, VaccineDuplicate> replacementVaccines = new HashMap<>();
-        replacementVaccines.put("MR 2", new VaccineDuplicate("MR 2", VaccineRepo.Vaccine.mr1, -1, 548, 183, "child"));
-        replacementVaccines.put("BCG 2", new VaccineDuplicate("BCG 2", VaccineRepo.Vaccine.bcg, 1825, 0, 42, "child"));
+        replacementVaccines.put("MR 2", new VaccineDuplicate("MR 2", VaccineRepo.Vaccine.mr1, -1, 548, 183, GizConstants.KEY.CHILD));
+        replacementVaccines.put("BCG 2", new VaccineDuplicate("BCG 2", VaccineRepo.Vaccine.bcg, 1825, 0, 42, GizConstants.KEY.CHILD));
 
         for (VaccineRepo.Vaccine vaccine : vaccines) {
             if (replacementVaccines.containsKey(vaccine.display())) {
@@ -597,7 +600,7 @@ public class GizMalawiApplication extends DrishtiApplication implements TimeChan
             }
         }
 
-        ImmunizationLibrary.getInstance().setVaccines(vaccines);
+        ImmunizationLibrary.getInstance().setVaccines(vaccines, GizConstants.KEY.CHILD);
     }
 
     public DailyTalliesRepository dailyTalliesRepository() {
@@ -660,6 +663,13 @@ public class GizMalawiApplication extends DrishtiApplication implements TimeChan
             appExecutors = new AppExecutors();
         }
         return appExecutors;
+    }
+
+    public ReasonForDefaultingRepository reasonForDefaultingRepository() {
+        if (reasonForDefaultingRepository == null) {
+            this.reasonForDefaultingRepository = new ReasonForDefaultingRepository();
+        }
+        return this.reasonForDefaultingRepository;
     }
 }
 

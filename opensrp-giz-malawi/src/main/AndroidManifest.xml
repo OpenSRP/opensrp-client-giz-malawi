@@ -32,7 +32,13 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup,android:icon,android:label,android:theme">
         <activity
+            android:name=".activity.ReportTypeListRegisterActivity"
+            android:theme="@style/ChildTheme.NoActionBar" />
+        <activity
             android:name=".activity.ReportRegisterActivity"
+            android:theme="@style/ChildTheme.NoActionBar" />
+        <activity
+            android:name=".activity.FragmentBaseActivity"
             android:theme="@style/ChildTheme.NoActionBar" />
         <activity
             android:name=".activity.ChildImmunizationActivity"
@@ -109,6 +115,10 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/captured_images_path" />
+
+            <meta-data
+                android:name="android.support.PDF_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
         <!-- ANC ACTIVITIES -->
         <activity
@@ -135,12 +145,12 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AncAppTheme.NoActionBar" />
-<!--        <activity-->
-<!--            android:name="org.smartregister.anc.library.activity.ProfileActivity"-->
-<!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
-<!--            android:launchMode="singleTask"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/AncAppTheme.NoActionBar" />-->
+        <!--        <activity-->
+        <!--            android:name="org.smartregister.anc.library.activity.ProfileActivity"-->
+        <!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
+        <!--            android:launchMode="singleTask"-->
+        <!--            android:screenOrientation="portrait"-->
+        <!--            android:theme="@style/AncAppTheme.NoActionBar" />-->
         <activity
             android:name="org.smartregister.anc.library.activity.PopulationCharacteristicsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -217,8 +227,8 @@
             android:name=".activity.GizOpdProfileActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            tools:replace="android:theme"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:replace="android:theme" />
         <!-- END OF OPD ACTIVITIES -->
         <!-- MATERNITY ACTIVITIES -->
         <activity
@@ -229,47 +239,46 @@
         <activity
             android:name="org.smartregister.maternity.activity.BaseMaternityFormActivity"
             android:screenOrientation="portrait"
-            tools:replace="android:theme"
             android:theme="@style/ChildTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            tools:replace="android:theme" />
         <activity
             android:name="org.smartregister.maternity.activity.BaseMaternityProfileActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            tools:replace="android:theme"
-            android:theme="@style/ChildTheme.NoActionBar" />
+            android:theme="@style/ChildTheme.NoActionBar"
+            tools:replace="android:theme" />
         <activity
             android:name=".activity.GizMaternityProfileActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            tools:replace="android:theme"
-            android:theme="@style/ChildTheme.NoActionBar" />
+            android:theme="@style/ChildTheme.NoActionBar"
+            tools:replace="android:theme" />
         <!-- END OF MATERNITY ACTIVITIES -->
         <!-- PNC ACTIVITIES -->
         <activity
             android:name=".activity.PncRegisterActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/ChildTheme.NoActionBar">
-        </activity>
+            android:theme="@style/ChildTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.GizPncFormActivity"
             android:screenOrientation="portrait"
-            tools:replace="android:theme"
             android:theme="@style/ChildTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            tools:replace="android:theme" />
         <activity
             android:name="org.smartregister.pnc.activity.BasePncProfileActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            tools:replace="android:theme"
-            android:theme="@style/ChildTheme.NoActionBar" />
+            android:theme="@style/ChildTheme.NoActionBar"
+            tools:replace="android:theme" />
         <activity
             android:name=".activity.GizPncProfileActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            tools:replace="android:theme"
-            android:theme="@style/ChildTheme.NoActionBar" />
+            android:theme="@style/ChildTheme.NoActionBar"
+            tools:replace="android:theme" />
         <!-- END OF PNC ACTIVITIES -->
         <service android:name="org.smartregister.immunization.service.intent.VaccineIntentService" />
         <service android:name="org.smartregister.immunization.service.intent.RecurringIntentService" />

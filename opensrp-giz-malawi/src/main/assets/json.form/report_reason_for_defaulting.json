@@ -1,0 +1,184 @@
+{
+  "count": "1",
+  "encounter_type": "Reason For Defaulting",
+  "entity_id": "",
+  "relational_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": ""
+  },
+  "step1": {
+    "title": "Reason For Defaulting",
+    "fields": [
+      {
+        "key": "outreach_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "date_picker",
+        "hint": "What was the date of the outreach?",
+        "expanded": false,
+        "max_date": "today-1d",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the date of Outreach"
+        }
+      },
+      {
+        "key": "followup_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "date_picker",
+        "hint": "Date of follow-up",
+        "expanded": false,
+        "max_date": "today",
+        "v_required": {
+          "value": "true",
+          "err": "Please enter the Follow Up date "
+        },
+        "constraints": [
+          {
+            "type": "date",
+            "ex": "notEqualTo(., step1:outreach_date)",
+            "err": "Follow Up Date can not be the same date as the outreach date"
+          }
+        ]
+      },
+      {
+        "key": "outreach_defaulting_rsn",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "check_box",
+        "hint": "Reason the child with overdue services (from the children with due services report) did not attend an outreach event",
+        "label": "Reason the child did not attend the outreach",
+        "label_text_style": "bold",
+        "combine_checkbox_option_values": "true",
+        "exclusive": [
+          "other"
+        ],
+        "options": [
+          {
+            "key": "forgot_about_it",
+            "text": "Forgot about it",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "out_of_town",
+            "text": "Was out of town on that day",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "did_not_think_was_important",
+            "text": "Did not think it was important to do",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "someone_in_household_was_sick",
+            "text": "Someone at the household was sick that day and they could not attend",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "family_moved_away",
+            "text": "Family moved away",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "do_not_know",
+            "text": "Do not know",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "other",
+            "text": "Other",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select reason for defaulting"
+        }
+      },
+      {
+        "key": "other_defaulting_rsn",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "label": "Other reasons for not attending the outreach",
+        "hint": "Indicate other reasons for not attending the outreach ",
+        "relevance": {
+          "step1:outreach_defaulting_rsn": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "other"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "key": "additional_defaulting_notes",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "edit_text",
+        "hint": "Additional Notes",
+        "v_required": {
+          "value": false,
+          "err": "Please enter the date of Outreach"
+        }
+      }
+    ]
+  }
+}

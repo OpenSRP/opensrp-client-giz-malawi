@@ -29,7 +29,16 @@ public class ReportGroupingModel {
             groupings.add(new ReportGrouping(context.getString(R.string.opd_report_grouping_title), "opd"));
             groupings.add(new ReportGrouping(context.getString(R.string.pnc_report_grouping_title), "pnc"));
         }
+        return groupings;
+    }
 
+    @NonNull
+    public ArrayList<ReportGrouping> getReportListGroupings() {
+        if (groupings.isEmpty()) {
+            groupings.add(new ReportGrouping(context.getString(R.string.dhis2_report_grouping_title), null));
+            groupings.add(new ReportGrouping(context.getString(R.string.child_due_report_grouping_title), null));
+            groupings.add(new ReportGrouping(context.getString(R.string.vaccine_needed_report_grouping_title), null));
+        }
         return groupings;
     }
 
