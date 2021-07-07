@@ -1,0 +1,1043 @@
+{
+  "count": "1",
+  "encounter_type": "OPD_Vital_Danger_signs_check",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Vital/Danger Signs",
+    "fields": [
+      {
+        "key": "opd_danger_signs",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "160939AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "check_box",
+        "label": "Danger signs",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "danger_none"
+        ],
+        "options": [
+          {
+            "key": "danger_none",
+            "text": "None",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "danger_bleeding",
+            "text": "Bleeding vaginally",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "150802AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "central_cyanosis",
+            "text": "Central cyanosis",
+            "label_info_text": "Bluish discolouration around the mucous membranes in the mouth, lips and tongue",
+            "label_info_title": "Central cyanosis",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "165216AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "convulsing",
+            "text": "Convulsing",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "164483AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "danger_fever",
+            "text": "Fever",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "140238AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "severe_headache",
+            "text": "Severe headache",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "139081AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "visual_disturbance",
+            "text": "Visual disturbance",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "123074AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "imminent_delivery",
+            "text": "Imminent delivery",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "162818AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "labour",
+            "text": "Labour",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "145AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "looks_very_ill",
+            "text": "Looks very ill",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "163293AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "severe_vomiting",
+            "text": "Severe vomiting",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "118477AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "severe_pain",
+            "text": "Severe pain",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "163477AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "severe_abdominal_pain",
+            "text": "Severe abdominal pain",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "165271AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "unconscious",
+            "text": "Unconscious",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "123818AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        ],
+        "v_required": {
+          "value": "true",
+          "err": "Danger signs is required"
+        }
+      },
+      {
+        "key": "opd_danger_signs_proceed",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "1885AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "native_radio",
+        "hint": "Danger sign! How to proceed? ",
+        "label": "Danger sign! How to proceed? ",
+        "label_text_style": "bold",
+        "options": [
+          {
+            "key": "refer",
+            "text": "Refer",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "1883AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "proceed_to_normal_treatment",
+            "text": "Proceed to normal treatment",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "1884AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "danger_signs_toaster",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Urgent medication attention required!",
+        "toaster_type": "problem",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "opd_danger_signs_treat",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "165218AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "native_radio",
+        "label": "Any treatment given before referral?",
+        "label_text_style": "bold",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select and option"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "opd_vital_signs",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "165218AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "native_radio",
+        "label": "Check Vital signs?",
+        "label_text_style": "bold",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select and option"
+        }
+      },
+      {
+        "key": "body_temp_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Temperature (ºC)",
+        "text_color": "#000000",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "body_temp",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "normal_edit_text",
+        "edit_text_style": "bordered",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": "true",
+          "err": ""
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "pulse_rate_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Pulse rate (bpm)",
+        "text_color": "#000000",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "pulse_rate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "5087AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "normal_edit_text",
+        "edit_text_style": "bordered",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": "true",
+          "err": ""
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "current_weight_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Current weight (kg)",
+        "text_color": "#000000",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "current_weight",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "normal_edit_text",
+        "edit_text_style": "bordered",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": "true",
+          "err": ""
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "height_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Height (cm)",
+        "text_color": "#000000",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "height",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "normal_edit_text",
+        "edit_text_style": "bordered",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": "true",
+          "err": ""
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "opd_bp_note",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Take the patient's Blood pressure",
+        "toaster_type": "info",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "bp_systolic_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Systolic blood pressure (SBP) (mmHg)",
+        "text_color": "#000000",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "bp_systolic",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "5085AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "normal_edit_text",
+        "edit_text_style": "bordered",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": "true",
+          "err": ""
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "bp_diastolic_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Diastolic blood pressure (DBP) (mmHg)",
+        "text_color": "#000000",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "bp_diastolic",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "5086AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "normal_edit_text",
+        "edit_text_style": "bordered",
+        "edit_type": "number",
+        "v_numeric": {
+          "value": "true",
+          "err": ""
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "oximetry_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Oxygen Saturation",
+        "text_color": "#000000",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "oximetry",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "5092AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "normal_edit_text",
+        "edit_text_style": "bordered",
+        "edit_type": "number",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "respiratory_rate_note",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Indicate the patients respiratory rate. A person's respiratory rate is the number of breaths taken per minute.",
+        "toaster_type": "info",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "respiratory_rate_label",
+        "type": "label",
+        "label_text_style": "bold",
+        "text": "Respiratory Rate",
+        "text_color": "#000000",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "respiratory_rate",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "5092AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "normal_edit_text",
+        "edit_text_style": "bordered",
+        "edit_type": "number",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "convulsions_history",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "165218AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "native_radio",
+        "label": "History of convulsions?",
+        "label_text_style": "bold",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Please select and option"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "opd_health_concerns",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "160939AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "check_box",
+        "label": "Specific complaint(s) or  Health concern(s)",
+        "label_text_style": "bold",
+        "text_color": "#000000",
+        "exclusive": [
+          "danger_none"
+        ],
+        "options": [
+          {
+            "key": "abnormal_vaginal_discharge",
+            "text": "Abnormal vaginal discharge",
+            "value": false,
+            "label_info_text": "Abnormal vaginal discharge (physiological) (foul smelling) (curd like)",
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "123395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "changes_in_blood_pressure_up",
+            "text": "Change in blood pressure – up (hypertension)",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "155052AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "changes_in_blood_pressure_down",
+            "text": "Change in blood pressure – down (hypotension)",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "constipation",
+            "text": "Constipation",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "996AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "contractions",
+            "text": "Contractions",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "163750AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "cough",
+            "text": "Cough",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "cough",
+            "text": "Cough",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "diarrhoea",
+            "text": "Diarrhoea",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "",
+            "openmrs_entity_id": ""
+          },
+          {
+            "key": "dizziness",
+            "text": "Dizziness",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "156046AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "fatal_movement",
+            "text": "No fetal movement",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "1452AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "fatal_movement_reduced",
+            "text": "Reduced or poor fetal movement",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "113377AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "fever",
+            "text": "Fever",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "140238AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "flu_symptoms",
+            "text": "Flu symptoms",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "137162AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "fluid_loss",
+            "text": "Fluid loss (leaking)",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "148968AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "headache",
+            "text": "Headache",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "heartburn",
+            "text": "Heartburn",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "139059AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "trauma",
+            "text": "Trauma - Injury",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "124193AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "domestic_violence",
+            "text": "Domestic violence - Intimate partner violence",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "141814AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "jaundice",
+            "text": "Jaundice",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "136443AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "leg_cramps",
+            "text": "Leg cramps",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "135969AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "leg_redness",
+            "text": "Leg redness",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "165215AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "leg_redness",
+            "text": "Leg redness",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "165215AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "anxiety",
+            "text": "Anxiety",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "121543AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "depression",
+            "text": "depression",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "119537AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "other_psychological_symptoms",
+            "text": "Other psychological symptoms",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "160198AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "nausea_vomiting_diarrhea",
+            "text": "Nausea / vomiting / diarrhea",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "157892AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "oedema",
+            "text": "Oedema",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "460AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "other_bleeding",
+            "text": "Other bleeding",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "147241AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "other_skin_disorder",
+            "text": "Other skin disorder",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "119022AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "other_types_of_violence",
+            "text": "Other types of violence",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "158358AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "full_abdominal_pain",
+            "text": "Full abdominal pain",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "139547AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "pain_during_urination",
+            "text": "Pain during urination (dysuria)",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "118771AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "extreme_pelvic_pain",
+            "text": "Extreme pelvic pain",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "165270AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "leg_pain",
+            "text": "Leg pain",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "114395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "Low_back_pain",
+            "text": "Low back pain",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "116225AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "other_pain",
+            "text": "Other pain",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "114403AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "pelvic_pain",
+            "text": "Pelvic pain",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "131034AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "pruritus",
+            "text": "Pruritus",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "879AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "
+          },
+          {
+            "key": "shortness_of_breath",
+            "text": "Shortness of breath",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "141600AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "tiredness",
+            "text": "Tiredness",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "124628AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "vaginal_bleeding",
+            "text": "Vaginal bleeding",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "147232AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "visual_disturbance",
+            "text": "Visual disturbance",
+            "value": false,
+            "openmrs_entity_parent": "",
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "123074AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          },
+          {
+            "key": "vomiting",
+            "text": "Vomiting",
+            "value": false,
+            "openmrs_entity": "",
+            "openmrs_entity_id": "",
+            "openmrs_entity_parent": ""
+          },
+          {
+            "key": "other_health_concern",
+            "text": "Other health concern (specify)",
+            "value": false,
+            "openmrs_entity": "concept",
+            "openmrs_entity_id": "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "openmrs_entity_parent": ""
+          }
+        ],
+        "v_required": {
+          "value": true,
+          "err": "Danger signs is required"
+        }
+      },
+      {
+        "key": "specific_complaint_other",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "160218AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "edit_text",
+        "hint": "Specify",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Please specify other health concern"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_danger_signs_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "visit_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "hidden"
+      },
+      {
+        "key": "visit_date",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "hidden"
+      }
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 {
   "count": "1",
-  "encounter_type": "OPD_Check_in",
+  "encounter_type": "OPD_Final_Outcome",
   "entity_id": "",
   "metadata": {
     "start": {
@@ -51,138 +51,126 @@
     }
   },
   "step1": {
-    "title": "OPD Check-In",
+    "title": "Outcome",
     "fields": [
       {
-        "key": "visit_type",
+        "key": "discharged_alive",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
+        "label": "Was the client discharged alive?",
         "type": "native_radio",
-        "label": "Visit Type",
-        "options": [
-          {
-            "key": "New",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "",
-            "text": "New"
-          },
-          {
-            "key": "Referral",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "",
-            "text": "Referral"
-          },
-          {
-            "key": "Re-Visit",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "",
-            "text": "Re-Visit"
-          }
-        ],
-        "v_required": {
-          "value": "true",
-          "err": "Please answer the question"
-        }
-      },
-      {
-        "key": "appointment_scheduled",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "native_radio",
-        "label": "Was an appointment scheduled previously?",
         "options": [
           {
             "key": "yes",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "",
             "text": "Yes"
           },
           {
             "key": "no",
-            "openmrs_entity_parent": "",
-            "openmrs_entity": "",
-            "openmrs_entity_id": "",
+            "text": "No"
+          }
+        ]
+      },
+      {
+        "key": "discharged_home",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "label": "Were they discharged to home?",
+        "type": "native_radio",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
             "text": "No"
           }
         ],
-        "v_required": {
-          "value": "true",
-          "err": "Please answer the question"
-        }
-      },
-      {
-        "key": "appointment_due_date",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "date_picker",
-        "hint": "If appointment was scheduled, when was it due?",
-        "values": [
-          "Yes",
-          "No"
-        ],
-        "keys": [
-          "yes",
-          "no"
-        ],
         "relevance": {
-          "step1:appointment_scheduled": {
-            "type": "string",
-            "ex": "equalTo(., \"yes\")"
-          }
-        }
-      },
-      {
-        "key": "appointment_done_inless_time",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "hidden",
-        "calculation": {
           "rules-engine": {
             "ex-rules": {
-              "rules-file": "opd/opd_checkin_calculations.yml"
+              "rules-file": "opd/opd_outcome_relevance_rules.yml"
             }
           }
         }
       },
       {
-        "key": "appointment_made_date",
+        "key": "referral",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",
-        "type": "date_picker",
-        "hint": "When was the appointment made?",
-        "values": [
-          "Yes",
-          "No"
-        ],
-        "keys": [
-          "yes",
-          "no"
+        "label": "Was the client referred?",
+        "type": "native_radio",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes"
+          },
+          {
+            "key": "no",
+            "text": "No"
+          }
         ],
         "relevance": {
-          "step1:appointment_scheduled": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_outcome_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "referral_location",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "spinner",
+        "hint": "Where were they referred to?",
+        "values": [
+          "Nutrition Clinic",
+          "ART Clinic",
+          "TB Clinic",
+          "ANC Clinic",
+          "Down Referral",
+          "Other Health Facility",
+          "Other (specify)"
+        ],
+        "keys": [
+          "nutrition_clinic",
+          "art_clinic",
+          "tb_clinic",
+          "anc_clinic",
+          "down_referral",
+          "other_health_facility",
+          "other"
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_outcome_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "referral_location_specify",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "openmrs_data_type": "text",
+        "type": "edit_text",
+        "hint": "Specify any referral location",
+        "relevance": {
+          "step1:referral_location": {
             "type": "string",
-            "ex": "equalTo(., \"yes\")"
+            "ex": "equalTo(.,\"other\")"
           }
         }
       },
       {
         "key": "visit_id",
-        "openmrs_entity_parent": "",
-        "openmrs_entity": "",
-        "openmrs_entity_id": "",
-        "type": "hidden"
-      },
-      {
-        "key": "visit_date",
         "openmrs_entity_parent": "",
         "openmrs_entity": "",
         "openmrs_entity_id": "",

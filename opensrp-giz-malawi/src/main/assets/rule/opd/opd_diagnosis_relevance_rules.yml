@@ -1,0 +1,126 @@
+---
+name: step1_danger_signs_opd_note
+description: danger_signs_opd_note
+priority: 1
+condition: "!step1_danger_signs_opd_note_val.equals('')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_vital_signs_opd_note
+description: vital_signs_opd_note
+priority: 1
+condition: "!step1_vital_signs_opd_note_val.equals('')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_health_concerns_note
+description: health_concerns_note
+priority: 1
+condition: "!step1_health_concerns_note_val.equals('')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_pregnancy_status
+description: opd_client_pregnancy_status
+priority: 1
+condition: "(step1_gender.equalsIgnoreCase('Female') || step1_gender.equalsIgnoreCase('F')) && (step1_age.equals('') || step1_age > 10 )"
+actions:
+  - "isRelevant = true"
+---
+name: step1_lmp
+description: lmp
+priority: 1
+condition: "step1_lmp_unknown.isEmpty() || !step1_lmp_unknown.contains('lmp_unknown')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_lmp_duration
+description: lmp_duration
+priority: 1
+condition: "!step1_lmp.equals('')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_medical_conditions_specify
+description: medical_conditions_specify
+priority: 1
+condition: "!step1_medical_conditions.isEmpty() && step1_medical_conditions.contains('other')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_tested_date
+description: hiv_tested_date
+priority: 1
+condition: "step1_medical_conditions.contains('hiv')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_prev_status
+description: hiv_prev_status
+priority: 1
+condition: "step1_medical_conditions.contains('hiv')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_prev_pos_art
+description: hiv_prev_pos_art
+priority: 1
+condition: "step1_medical_conditions.contains('hiv') && step1_hiv_prev_status.contains('positive')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_hiv_diagnosis_date_unknown
+description: hiv_diagnosis_date_unknown
+priority: 1
+condition: "step1_medical_conditions.contains('hiv')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_test_recommended
+description: test_recommended
+priority: 1
+condition: "step1_diagnosis_same.isEmpty() || !step1_diagnosis_same.contains('isSameAsFinalDiagnosis')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_diagnostic_test
+description: diagnostic_test
+priority: 1
+condition: "step1_test_recommended.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_test_ordered_other
+description: test_ordered_other
+priority: 1
+condition: "step1_diagnostic_test.contains('other')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_disease_code_label_final
+description: disease_code_label_final
+priority: 1
+condition: "step1_diagnosis_same.isEmpty() || !step1_diagnosis_same.contains('isSameAsFinalDiagnosis')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_disease_code_final_diagn
+description: disease_code_final_diagn
+priority: 1
+condition: "step1_diagnosis_same.isEmpty() || !step1_diagnosis_same.contains('isSameAsFinalDiagnosis')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_diagnosis_type_final
+description: diagnosis_type_final
+priority: 1
+condition: "step1_diagnosis_same.isEmpty() || !step1_diagnosis_same.contains('isSameAsFinalDiagnosis')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_diagnosis_final
+description: diagnosis_final
+priority: 1
+condition: "step1_diagnosis_same.isEmpty() || !step1_diagnosis_same.contains('isSameAsFinalDiagnosis')"
+actions:
+  - "isRelevant = true"

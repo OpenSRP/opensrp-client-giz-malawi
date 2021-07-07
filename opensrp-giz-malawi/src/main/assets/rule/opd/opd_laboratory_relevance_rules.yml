@@ -1,0 +1,181 @@
+---
+name: step1_test_ordered_lab
+description: Tests ordered toast
+priority: 1
+condition: "step1_test_ordered_lab_val != NULL || step1_test_ordered_lab_val != ''"
+actions:
+  - "isRelevant = true"
+---
+name: step1_diagnostic_test
+description: diagnostic_test
+priority: 1
+condition: "step1_test_ordered_avail.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_other_tests
+description: other_tests
+priority: 1
+condition: "step1_diagnostic_test.contains('other')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_diagnostic_test_result
+description: diagnostic_test_result
+priority: 1
+condition: "step1_diagnostic_test.contains('urine_pregnancy_test')
+              || step1_diagnostic_test.contains('hiv_test')
+              || step1_diagnostic_test.contains('syphilis_test')
+              || step1_diagnostic_test.contains('hep_b')
+              || step1_diagnostic_test.contains('hep_c')
+              || step1_diagnostic_test.contains('tb_urine')
+              || step1_diagnostic_test.contains('midstream_urine')
+              || step1_diagnostic_test.contains('malaria_microscopy')
+              || step1_diagnostic_test.contains('hiv_eid')
+              || step1_diagnostic_test.contains('hiv_rapid')
+              || step1_diagnostic_test.contains('malaria_test')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_diagnostic_test_result_ultra_sound
+description: diagnostic_test_result_ultra_sound
+priority: 1
+condition: "step1_diagnostic_test.contains('ultra_sound')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_diagnostic_test_result_hemocue
+description: diagnostic_test_result_hemocue
+priority: 1
+condition: "step1_diagnostic_test.contains('blood_glucose_test')
+              || step1_diagnostic_test.contains('hemocue')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_diagnostic_test_result_hemocue
+description: diagnostic_test_result_hemocue
+priority: 1
+condition: "step1_diagnostic_test.contains('blood_glucose_test')
+              || step1_diagnostic_test.contains('hemocue')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_diagnostic_test_result_tb_gene
+description: diagnostic_test_result_tb_gene
+priority: 1
+condition: "step1_diagnostic_test.contains('tb_gene')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_diagnostic_test_result_tb_gene
+description: diagnostic_test_result_tb_gene
+priority: 1
+condition: "step1_diagnostic_test.contains('tb_gene')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_diagnostic_test_result_tsm
+description: diagnostic_test_result_tsm
+priority: 1
+condition: "step1_diagnostic_test.contains('tb_smear')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_test_result_urine_dipstick_nitrites
+description: test_result_urine_dipstick_nitrites
+priority: 1
+condition: "step1_diagnostic_test.contains('urine_dipstick')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_test_result_urine_dipstick_leukocytes
+description: test_result_urine_dipstick_leukocytes
+priority: 1
+condition: "step1_diagnostic_test.contains('urine_dipstick')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_test_result_urine_dipstick_protein
+description: test_result_urine_dipstick_protein
+priority: 1
+condition: "step1_diagnostic_test.contains('urine_dipstick')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_test_result_urine_dipstick_glucose
+description: test_result_urine_dipstick_glucose
+priority: 1
+condition: "step1_diagnostic_test.contains('urine_dipstick')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_test_result_hiv_viral_load
+description: test_result_hiv_viral_load
+priority: 1
+condition: "step1_diagnostic_test.contains('hiv_viral_oad')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_test_result_hiv_viral_load_no
+description: test_result_hiv_viral_load_no
+priority: 1
+condition: "step1_diagnostic_test.contains('hiv_viral_oad')
+              && step1_test_result_hiv_viral_load.contains('detectable')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_diagnostic_test_result_gluc
+description: diagnostic_test_result_gluc
+priority: 1
+condition: "step1_diagnostic_test.contains('blood_glucose_test')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_diagnostic_test_result_bloodtype
+description: diagnostic_test_result_bloodtype
+priority: 1
+condition: "step1_diagnostic_test.contains('blood_type')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_test_not_done
+description: test_not_done
+priority: 1
+condition: "step1_test_ordered_avail.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_test_not_done_other
+description: test_not_done_other
+priority: 1
+condition: "step1_test_not_done.contains('other')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_test_not_available_rsn
+description: test_not_available_rsn
+priority: 1
+condition: "step1_test_ordered_avail.contains('no') || step1_test_ordered_avail.contains('some_of_them')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_test_not_available_rsn_other
+description: test_not_available_rsn_other
+priority: 1
+condition: "step1_test_not_available_rsn.contains('other')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_referral_lab
+description: referral_lab
+priority: 1
+condition: "step1_test_ordered_avail.contains('no') || step1_test_ordered_avail.contains('some_of_them')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_referral_location_med
+description: referral_location_med
+priority: 1
+condition: "step1_referral_lab.contains('yes')"
+actions:
+  - "isRelevant = true"

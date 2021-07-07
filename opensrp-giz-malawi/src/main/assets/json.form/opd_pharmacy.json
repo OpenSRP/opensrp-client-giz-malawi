@@ -1,0 +1,316 @@
+{
+  "count": "1",
+  "encounter_type": "OPD_Pharmacy",
+  "entity_id": "",
+  "metadata": {
+    "start": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "start",
+      "openmrs_entity_id": "163137AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "end": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "end",
+      "openmrs_entity_id": "163138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "today": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "encounter",
+      "openmrs_entity_id": "encounter_date"
+    },
+    "deviceid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "deviceid",
+      "openmrs_entity_id": "163149AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "subscriberid": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "subscriberid",
+      "openmrs_entity_id": "163150AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "simserial": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "simserial",
+      "openmrs_entity_id": "163151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "phonenumber": {
+      "openmrs_entity_parent": "",
+      "openmrs_entity": "concept",
+      "openmrs_data_type": "phonenumber",
+      "openmrs_entity_id": "163152AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "encounter_location": "",
+    "look_up": {
+      "entity_id": "",
+      "value": ""
+    }
+  },
+  "step1": {
+    "title": "Pharmacy",
+    "fields": [
+      {
+        "key": "prescription_val",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "hidden"
+      },
+      {
+        "key": "prescription",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "Note highlighting the medication that was prescribed to the client. ",
+        "toaster_type": "info",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_pharmacy_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "medicine_available",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "=",
+        "openmrs_entity_id": "",
+        "label": "Prescribed medication available?",
+        "label_text_style": "bold",
+        "type": "native_radio",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ]
+      },
+      {
+        "key": "alt_medicine",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "=",
+        "openmrs_entity_id": "",
+        "label": "Alternative medication available?",
+        "label_text_style": "bold",
+        "type": "native_radio",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_pharmacy_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "medicine_refer",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "toaster_notes",
+        "text": "If there is no medicine available, refer client to a facility where the medication is available.",
+        "toaster_type": "info",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_pharmacy_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "medicine_label",
+        "type": "label",
+        "text": "Medication Dispensed",
+        "text_color": "#000000",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_pharmacy_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "medicine",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "161189AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "sortClass": "org.smartregister.opd.comparator.MultiSelectListAlphabetTextComparator",
+        "sort": true,
+        "groupings": "[A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]",
+        "source": "csv",
+        "repositoryClass": "org.smartregister.opd.widgets.OpdMedicineMultiSelectListRepository",
+        "type": "multi_select_drug_picker",
+        "buttonText": "+ Add treatment/medicine",
+        "dialogTitle": "Add treatment/medicine",
+        "searchHint": "Type treatment/medicine name",
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_pharmacy_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "dosage",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "160856AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "edit_text",
+        "hint": "Dosage",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the dosage"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_pharmacy_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "frequency",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "165503AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "edit_text",
+        "hint": "Frequency",
+        "edit_type": "number",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the dosage frequency"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_pharmacy_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "duration",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "159368AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "edit_text",
+        "hint": "Duration",
+        "edit_type": "name",
+        "v_required": {
+          "value": true,
+          "err": "Please enter the dosage"
+        },
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_pharmacy_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "special_instructions",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "161011AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "hint": "Special Instructions",
+        "type": "edit_text"
+      },
+      {
+        "key": "referral_medicine",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "161360AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "label": "Was the client referred?",
+        "label_text_style": "bold",
+        "type": "native_radio",
+        "options": [
+          {
+            "key": "yes",
+            "text": "Yes",
+            "value": false
+          },
+          {
+            "key": "no",
+            "text": "No",
+            "value": false
+          }
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_pharmacy_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "referral_location_med",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "161360AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "label": "Where were they referred to?",
+        "label_text_style": "bold",
+        "type": "native_radio",
+        "options": [
+        ],
+        "relevance": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_pharmacy_relevance_rules.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "medicine_object",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "hidden",
+        "calculation": {
+          "rules-engine": {
+            "ex-rules": {
+              "rules-file": "opd/opd_pharmacy_calculation.yml"
+            }
+          }
+        }
+      },
+      {
+        "key": "visit_id",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "",
+        "openmrs_entity_id": "",
+        "type": "hidden"
+      }
+    ]
+  }
+}

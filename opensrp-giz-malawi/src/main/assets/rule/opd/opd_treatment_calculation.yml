@@ -1,0 +1,7 @@
+---
+name: step1_medicine_object
+description: medicine_object
+priority: 1
+condition: "true"
+actions:
+  - 'calculation = step1_medicine'

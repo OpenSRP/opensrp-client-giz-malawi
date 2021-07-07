@@ -1,0 +1,28 @@
+---
+name: step1_medicine
+description: medicine
+priority: 1
+condition: "!step1_treatment_type.isEmpty() && step1_treatment_type.contains('medicine')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_treatment_type_specify
+description: treatment type specify
+priority: 1
+condition: "!step1_treatment_type.isEmpty() &&  step1_treatment_type.contains('other')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_final_diagnosis_note
+description: final diagnosis note
+priority: 1
+condition: "step1_final_diagnosis_note_val != NULL || step1_final_diagnosis_note_val != ''"
+actions:
+  - "isRelevant = true"
+---
+name: step1_lab_results_note
+description: lab_results_note
+priority: 1
+condition: "step1_lab_results_note_val != NULL || step1_lab_results_note_val != ''"
+actions:
+  - "isRelevant = true"

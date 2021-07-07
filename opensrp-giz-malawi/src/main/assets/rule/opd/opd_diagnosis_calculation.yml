@@ -1,0 +1,21 @@
+---
+name: step4_hiv_positive
+description: hiv_positive
+priority: 1
+condition: "step1_medical_conditions.contains('hiv') || step1_1hiv_prev_status.contains('positive')"
+actions:
+  - "calculation = 1"
+---
+name: step1_disease_code_object
+description: disease_code_object
+priority: 1
+condition: "true"
+actions:
+  - 'calculation = step1_disease_code'
+---
+name: step1_disease_code_object_final
+description: disease_code_object_final
+priority: 1
+condition: "true"
+actions:
+  - 'calculation = step1_disease_code_final_diagn'

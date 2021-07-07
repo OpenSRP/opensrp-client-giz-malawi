@@ -1,0 +1,21 @@
+---
+name: step1_discharged_home
+description: discharged_home
+priority: 1
+condition: "step1_discharged_alive == 'yes'"
+actions:
+  - "isRelevant = true"
+---
+name: step1_referral
+description: referral
+priority: 1
+condition: "step1_discharged_alive == 'yes'"
+actions:
+  - "isRelevant = true"
+---
+name: step1_referral_location
+description: referral_location
+priority: 1
+condition: "step1_referral == 'yes'"
+actions:
+  - "isRelevant = true"

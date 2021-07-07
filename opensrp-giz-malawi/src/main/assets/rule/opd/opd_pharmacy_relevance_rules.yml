@@ -1,0 +1,71 @@
+---
+name: step1_prescription
+description: prescription
+priority: 1
+condition: "!step1_prescription_val.equals('')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_alt_medicine
+description: alt_medicine
+priority: 1
+condition: "step1_medicine_available.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_medicine_refer
+description: medicine_refer
+priority: 1
+condition: "step1_medicine_available.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_medicine_label
+description: medicine_label
+priority: 1
+condition: "step1_medicine_available.contains('yes') || step1_alt_medicine.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_medicine
+description: medicine
+priority: 1
+condition: "step1_medicine_available.contains('yes') || step1_alt_medicine.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_dosage
+description: dosage
+priority: 1
+condition: "!step1_medicine.equals('') || !step1_medicine.isEmpty()"
+actions:
+  - "isRelevant = true"
+---
+name: step1_frequency
+description: frequency
+priority: 1
+condition: "!step1_medicine.equals('') || !step1_medicine.isEmpty()"
+actions:
+  - "isRelevant = true"
+---
+name: step1_duration
+description: duration
+priority: 1
+condition: "!step1_medicine.equals('') || !step1_medicine.isEmpty()"
+actions:
+  - "isRelevant = true"
+---
+name: step1_referral_medicine
+description: referral_medicine
+priority: 1
+condition: "step1_medicine_available.contains('no')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_referral_location_med
+description: referral_location_med
+priority: 1
+condition: "step1_referral_medicine.contains('yes')"
+actions:
+  - "isRelevant = true"
+

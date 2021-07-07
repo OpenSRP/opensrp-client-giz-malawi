@@ -1,0 +1,186 @@
+---
+name: step1_opd_danger_signs_proceed
+description: opd_danger_signs_proceed
+priority: 1
+condition: "step1_opd_danger_signs.contains('danger_bleeding')
+              || step1_opd_danger_signs.contains('central_cyanosis')
+              || step1_opd_danger_signs.contains('convulsing')
+              || step1_opd_danger_signs.contains('danger_fever')
+              || step1_opd_danger_signs.contains('severe_headache')
+              || step1_opd_danger_signs.contains('visual_disturbance')
+              || step1_opd_danger_signs.contains('imminent_delivery')
+              || step1_opd_danger_signs.contains('labour')
+              || step1_opd_danger_signs.contains('looks_very_ill')
+              || step1_opd_danger_signs.contains('severe_vomiting')
+              || step1_opd_danger_signs.contains('severe_pain')
+              || step1_opd_danger_signs.contains('severe_abdominal_pain')
+              || step1_opd_danger_signs.contains('unconscious')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_danger_signs_toaster
+description: danger_signs_toaster
+priority: 1
+condition: "step1_opd_danger_signs.contains('danger_bleeding')
+                         || step1_opd_danger_signs.contains('central_cyanosis')
+                         || step1_opd_danger_signs.contains('convulsing')
+                         || step1_opd_danger_signs.contains('danger_fever')
+                         || step1_opd_danger_signs.contains('severe_headache')
+                         || step1_opd_danger_signs.contains('visual_disturbance')
+                         || step1_opd_danger_signs.contains('imminent_delivery')
+                         || step1_opd_danger_signs.contains('labour')
+                         || step1_opd_danger_signs.contains('looks_very_ill')
+                         || step1_opd_danger_signs.contains('severe_vomiting')
+                         || step1_opd_danger_signs.contains('severe_pain')
+                         || step1_opd_danger_signs.contains('severe_abdominal_pain')
+                         || step1_opd_danger_signs.contains('unconscious')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_opd_danger_signs_treat
+description: opd_danger_signs_treat
+priority: 1
+condition: "step1_opd_danger_signs_proceed.contains('refer')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_body_temp
+description: body_temp
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_body_temp_label
+description: body_temp_label
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_pulse_rate_label
+description: pulse_rate_label
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_pulse_rate
+description: pulse_rate
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_current_weight_label
+description: pulse_current_weight_label
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_current_weight
+description: current_weight
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_height_label
+description: pulse_height_label
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_height
+description: height
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_opd_bp_note
+description: opd_bp_note
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_bp_systolic_label
+description: bp_systolic_label
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_bp_systolic
+description: bp_systolic
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_bp_diastolic_label
+description: bp_diastolic_label
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_bp_diastolic
+description: bp_diastolic
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_oximetry_label
+description: oximetry_label
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_oximetry
+description: oximetry
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_respiratory_rate_note
+description: respiratory_rate_note
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_respiratory_rate_label
+description: respiratory_rate_label
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_respiratory_rate
+description: respiratory_rate
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_convulsions_history
+description: convulsions_history
+priority: 1
+condition: "step1_opd_vital_signs.contains('yes')"
+actions:
+  - "isRelevant = true"
+---
+name: step1_specific_complaint_other
+description: specific_complaint_other
+priority: 1
+condition: "step1_opd_health_concerns.contains('other_health_concern')"
+actions:
+  - "isRelevant = true"
+
