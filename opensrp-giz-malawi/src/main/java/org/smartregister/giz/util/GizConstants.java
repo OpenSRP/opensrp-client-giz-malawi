@@ -14,9 +14,97 @@ public class GizConstants {
     public static final String REGISTER_TYPE = "register_type";
     public static final String IS_FROM_MATERNITY = "isFromMaternity";
 
+    public static final String METADATA = "metadata";
+
+    public static final String DETAILS = "details";
+    public static final String RELATIONSHIPS = "relationships";
+
+
+    public interface Properties {
+        String TASK_IDENTIFIER = "taskIdentifier";
+        String TASK_BUSINESS_STATUS = "taskBusinessStatus";
+        String TASK_STATUS = "taskStatus";
+        String TASK_CODE = "taskCode";
+        String LOCATION_UUID = "locationUUID";
+        String LOCATION_VERSION = "locationVersion";
+        String LOCATION_TYPE = "locationType";
+        String LOCATION_PARENT = "locationParent";
+        String LOCATION_ID = "location_id";
+        String FEATURE_SELECT_TASK_BUSINESS_STATUS = "featureSelectTaskBusinessStatus";
+        String BASE_ENTITY_ID = "baseEntityId";
+        String FORM_SUBMISSION_ID = "formSubmissionId";
+        String STRUCTURE_NAME = "structure_name";
+        String APP_VERSION_NAME = "appVersionName";
+        String FORM_VERSION = "form_version";
+        String TASK_CODE_LIST = "task_code_list";
+        String FAMILY_MEMBER_NAMES = "family_member_names";
+        String PLAN_IDENTIFIER = "planIdentifier";
+        String LOCATION_STATUS = "status";
+        String LOCATION_NAME = "name";
+    }
+
+
+    public interface Columns {
+        interface RegisterType {
+            String BASE_ENTITY_ID = "base_entity_id";
+            String REGISTER_TYPE = "register_type";
+            String DATE_REMOVED = "date_removed";
+            String DATE_CREATED = "date_created";
+        }
+    }
+
+    public interface DateTimeFormat {
+        String HH_MM_AMPM = "h:mm a";
+        String YYYY_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
+        String dd_MMM_yyyy = "dd MMM yyyy";
+        String hh_mm_ss = "hh:mm:ss";
+        String hh_mm = "hh:mm";
+        String dd_MM_yyyy = "dd/MM/yyyy";
+        String ddMMyyyy = "ddMMyyyy";
+        String yyyy_MM_dd = "yyyy-MM-dd";
+    }
+
+    public interface RegisterType {
+        String ANC = "anc";
+        String CHILD = "child";
+        String OPD = "opd";
+        String ALL_CLIENTS = "all_clients";
+        String MATERNITY = "maternity";
+        String PNC = "pnc";
+    }
+
+    public interface MultiResultProcessor {
+        String GROUPING_SEPARATOR = "_";
+    }
+
+    public interface IntentKey {
+        String REPORT_GROUPING = "report-grouping";
+    }
+
+    public interface Pref {
+        String APP_VERSION_CODE = "APP_VERSION_CODE";
+        String INDICATOR_DATA_INITIALISED = "INDICATOR_DATA_INITIALISED";
+    }
+
+    public interface File {
+        String INDICATOR_CONFIG_FILE = "config/indicator-definitions.yml";
+    }
+
+    public interface ReportKeys {
+        String REPORT_JSON = "reportJson";
+        String REPORT_DATE = "reportDate";
+        String GROUPING = "grouping";
+        String PROVIDER_ID = "providerId";
+        String DATE_CREATED = "dateCreated";
+        String HIA2_INDICATORS = "hia2Indicators";
+        String VALUE = "value";
+        String INDICATOR_CODE = "indicatorCode";
+    }
+
     public static final class KEY {
         public static final String MOTHER_BASE_ENTITY_ID = "mother_base_entity_id";
         public static final String CHILD = "child";
+        public static final String CHILD_OVER_FIVE = "child_over_5";
         public static final String MOTHER_FIRST_NAME = "mother_first_name";
         public static final String FIRST_NAME = "first_name";
         public static final String LAST_NAME = "last_name";
@@ -63,15 +151,15 @@ public class GizConstants {
         public static final String ATTRIBUTES = "attributes";
         public static final int FIVE_YEAR = 5;
         public static final String OPD_REGISTRATION = "Opd Registration";
-        public static String SITE_CHARACTERISTICS = "site_characteristics";
-
         public static final String FIELDS = "fields";
         public static final String KEY = "key";
         public static final String IS_VACCINE_GROUP = "is_vaccine_group";
         public static final String OPTIONS = "options";
-
+        public static String SITE_CHARACTERISTICS = "site_characteristics";
         public static String HIDDEN_FIELDS = "hidden_fields";
         public static String DISABLED_FIELDS = "disabled_fields";
+        public static final double ONE_YEAR = 365.4;
+        public static final String ALL_COMMUNITIES = "All communities";
     }
 
     public static final class DrawerMenu {
@@ -111,11 +199,13 @@ public class GizConstants {
         public static final String OPD_MATERNITY_TRANSFER = "opd_maternity_transfer";
         public static final String OPD_ANC_TRANSFER = "opd_anc_transfer";
         public static final String OPD_CHILD_TRANSFER = "opd_child_transfer";
+        public static final String REASON_FOR_DEFAULTING = "Reason For Defaulting";
     }
 
     public static class JSON_FORM {
         public static String CHILD_ENROLLMENT = "child_enrollment";
         public static String OUT_OF_CATCHMENT_SERVICE = "out_of_catchment_service";
+        public static String REASON_FOR_DEFAULTING = "report_reason_for_defaulting";
 
     }
 
@@ -129,15 +219,7 @@ public class GizConstants {
         public static final String ALL_CLIENTS = "ec_client";
         public static final String REGISTER_TYPE = "client_register_type";
         public static final String CHILD_UPDATED_ALERTS = "child_updated_alerts";
-    }
-
-    public interface Columns {
-        interface RegisterType {
-            String BASE_ENTITY_ID = "base_entity_id";
-            String REGISTER_TYPE = "register_type";
-            String DATE_REMOVED = "date_removed";
-            String DATE_CREATED = "date_created";
-        }
+        public static final String REASON_FOR_DEFAULTING = "reason_for_defaulting";
     }
 
     public static final class EntityType {
@@ -148,46 +230,29 @@ public class GizConstants {
         public static final String IS_REMOTE_LOGIN = "is_remote_login";
     }
 
-    public interface DateTimeFormat {
-        String HH_MM_AMPM = "h:mm a";
-        String YYYY_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
+    public static class ReportParametersHelper {
+        public static String COMMUNITY = "COMMUNITY";
+        public static String COMMUNITY_ID = "COMMUNITY_ID";
+        public static String REPORT_DATE = "REPORT_DATE";
     }
 
-    public interface RegisterType {
-        String ANC = "anc";
-        String CHILD = "child";
-        String OPD = "opd";
-        String ALL_CLIENTS = "all_clients";
-        String MATERNITY = "maternity";
-        String PNC = "pnc";
+    public static class JsonAssetsHelper {
+        public static final String ID = "id";
+        public static final String OUTREACH_DATE = "outreach_date";
+        public static final String FOLLOWUP_DATE = "followup_date";
+        public static final String OUTREACH_DEFAULTING_REASON = "outreach_defaulting_rsn";
+        public static final String OTHER_DEFAULTING_REASON = "other_defaulting_rsn";
+        public static final String ADDITIONAL_DEFAULTING_NOTES = "additional_defaulting_notes";
+        public static final String BASE_ENTITY_ID = "base_entity_id";
+        public static final String EVENT_DATE = "date";
     }
 
-    public interface MultiResultProcessor {
-        String GROUPING_SEPARATOR = "_";
+    public static class EmailParameterHelper {
+        public static String REPORTS = "Reports";
     }
 
-    public interface IntentKey {
-        String REPORT_GROUPING = "report-grouping";
-    }
-
-    public interface Pref {
-        String APP_VERSION_CODE = "APP_VERSION_CODE";
-        String INDICATOR_DATA_INITIALISED = "INDICATOR_DATA_INITIALISED";
-    }
-
-    public interface File {
-        String INDICATOR_CONFIG_FILE = "config/indicator-definitions.yml";
-    }
-
-    public interface ReportKeys {
-        String REPORT_JSON = "reportJson";
-        String REPORT_DATE = "reportDate";
-        String GROUPING = "grouping";
-        String PROVIDER_ID = "providerId";
-        String DATE_CREATED = "dateCreated";
-        String HIA2_INDICATORS = "hia2Indicators";
-        String VALUE = "value";
-        String INDICATOR_CODE = "indicatorCode";
+    public static class ReasonForDefaultingHelper {
+        public static String REPORT_REASON_FOR_DEFAULTING = "report_reason_for_defaulting";
     }
 
 }

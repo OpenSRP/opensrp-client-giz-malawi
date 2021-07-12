@@ -47,6 +47,6 @@ public class GizMalawiRepositoryTest extends BaseRobolectricTest {
         SQLiteDatabase database = Mockito.mock(SQLiteDatabase.class);
         Mockito.doNothing().when(gizMalawiRepository).initializeReportIndicatorState(database);
         gizMalawiRepository.onCreate(database);
-        Mockito.verify(database, Mockito.times(62)).execSQL(Mockito.contains("CREATE TABLE"));
+        Mockito.verify(database, Mockito.times(63)).execSQL(Mockito.contains("CREATE TABLE"));
     }
 }

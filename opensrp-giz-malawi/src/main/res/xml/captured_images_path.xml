@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
     <external-path name="captured_photos" path="Android/data/org.smartregister.giz/files/Pictures" />
+    <external-path name="external_files" path="." />
+    <files-path name="root" path="." />
+    <external-path name="downloaded_files" path="Android/data/org.smartregister.giz/files/Pdf" />
+    <cache-path
+        name="reports"
+        path="Android/data/org.smartregister.giz/cache"/>
+
+    <root-path path="." name="storage_root" />
 </paths>

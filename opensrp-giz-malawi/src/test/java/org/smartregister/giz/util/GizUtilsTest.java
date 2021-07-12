@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.util.ReflectionHelpers;
 import org.smartregister.Context;
 import org.smartregister.CoreLibrary;
@@ -25,6 +26,8 @@ import org.smartregister.child.domain.UpdateRegisterParams;
 import org.smartregister.child.interactor.ChildRegisterInteractor;
 import org.smartregister.child.util.Constants;
 import org.smartregister.commonregistry.AllCommonsRepository;
+import org.smartregister.commonregistry.CommonRepository;
+import org.smartregister.commonregistry.CommonRepositoryInformationHolder;
 import org.smartregister.domain.Client;
 import org.smartregister.domain.Event;
 import org.smartregister.domain.db.EventClient;
@@ -34,7 +37,9 @@ import org.smartregister.location.helper.LocationHelper;
 import org.smartregister.repository.AllSharedPreferences;
 import org.smartregister.view.activity.DrishtiApplication;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class GizUtilsTest extends BaseRobolectricTest {
@@ -149,4 +154,79 @@ public class GizUtilsTest extends BaseRobolectricTest {
             }
         }
     }
+
+    @Test
+    public void testGetDurationShouldReturnDuration() {
+        GizUtils.getDuration("2021-10-09T18:17:07.830+05:00");
+
+        Locale locale = RuntimeEnvironment.application.getApplicationContext().getResources().getConfiguration().locale;
+        DateTime todayDateTime = new DateTime("2021-10-09T18:17:07.830+05:00");
+
+        Assert.assertEquals("1d", GizUtils.getDuration(Long.parseLong("100000000"),
+                new DateTime("2021-10-10T18:17:07.830+05:00"),
+                todayDateTime,
+                locale));
+
+        Assert.assertEquals("2w 5d", GizUtils.getDuration(Long.parseLong("1641600000"),
+                new DateTime("2021-11-12T18:17:07.830+05:00"),
+                todayDateTime,
+                locale));
+
+
+        Assert.assertEquals("4m 3w", GizUtils.getDuration(Long.parseLong("12700800000"),
+                new DateTime("2021-11-12T18:17:07.830+05:00"),
+                todayDateTime,
+                locale));
+
+        Assert.assertEquals("4y 11m", GizUtils.getDuration(Long.parseLong("157334400000"),
+                new DateTime("2016-10-10T05:00:00.000+05:00"),
+                todayDateTime,
+                locale));
+
+        Assert.assertEquals("5y", GizUtils.getDuration(Long.parseLong("157334400000"),
+                new DateTime("2016-10-09T05:00:00.000+05:00"),
+                todayDateTime,
+                locale));
+    }
+
+    @Test
+    public void testShouldUpdateSyncStatus() throws Exception {
+        Assert.assertEquals(false, GizUtils.getSyncStatus());
+        GizUtils.updateSyncStatus(true);
+        Assert.assertEquals(true, GizUtils.getSyncStatus());
+    }
+
+    @Test
+    public void testGetStringResourceByName() {
+        android.content.Context androidContext = RuntimeEnvironment.application.getApplicationContext();
+        Assert.assertEquals("string", GizUtils.getStringResourceByName("string", androidContext));
+    }
+
+    @Test
+    public void testGetCommonRepositoryReturnsTableName() {
+        String tableName = "ec_child";
+        Context context = Mockito.spy(Context.getInstance());
+
+        // Mock ec_client_fields.json file
+        String ecClientFields = "{\"bindobjects\":[{\"name\":\"ec_child\",\"columns\":[{\"column_name\":\"base_entity_id\",\"json_mapping\":{\"field\":\"identifiers.opensrp_id\"}},{\"column_name\":\"first_name\",\"type\":\"Client\",\"json_mapping\":{\"field\":\"firstName\"}},{\"column_name\":\"last_name\",\"type\":\"Client\",\"json_mapping\":{\"field\":\"lastName\"}},{\"column_name\":\"village_town\",\"type\":\"Client\",\"json_mapping\":{\"field\":\"addresses.cityVillage\"}},{\"column_name\":\"quarter_clan\",\"type\":\"Client\",\"json_mapping\":{\"field\":\"addresses.commune\"}},{\"column_name\":\"street\",\"type\":\"Client\",\"json_mapping\":{\"field\":\"addresses.street\"}},{\"column_name\":\"landmark\",\"type\":\"Client\",\"json_mapping\":{\"field\":\"addresses.landmark\"}},{\"column_name\":\"gps\",\"type\":\"Event\",\"json_mapping\":{\"field\":\"obs.fieldCode\",\"concept\":\"163277AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"}},{\"column_name\":\"fam_source_income\",\"type\":\"Client\",\"json_mapping\":{\"field\":\"attributes.fam_source_income\"}},{\"column_name\":\"family_head\",\"type\":\"Client\",\"json_mapping\":{\"field\":\"relationships.family_head\"}},{\"column_name\":\"primary_caregiver\",\"type\":\"Client\",\"json_mapping\":{\"field\":\"relationships.primary_caregiver\"}},{\"column_name\":\"last_interacted_with\",\"type\":\"Event\",\"json_mapping\":{\"field\":\"version\"}},{\"column_name\":\"date_removed\",\"type\":\"Client\",\"json_mapping\":{\"field\":\"attributes.dateRemoved\"}},{\"column_name\":\"entity_type\",\"type\":\"Event\",\"json_mapping\":{\"field\":\"entityType\"}}]}]}";
+        Mockito.doReturn(ecClientFields).when(context).ReadFromfile(Mockito.eq("ec_client_fields.json"), Mockito.any(android.content.Context.class));
+
+        ReflectionHelpers.setField(context, "bindtypes", new ArrayList<CommonRepositoryInformationHolder>());
+        context.getEcBindtypes();
+
+        // Execute the method being tested
+        GizUtils.getCommonRepository(tableName);
+        CommonRepository commonRepository = context.commonrepository("ec_child");
+
+        Assert.assertEquals("ec_child", commonRepository.TABLE_NAME);
+    }
+
+    @Test
+    public void testGetLocale() {
+        Locale expectedLocaleNull = Locale.getDefault();
+        Locale expectedLocaleNotNull = RuntimeEnvironment.application.getResources().getConfiguration().locale;
+        Assert.assertEquals(expectedLocaleNull, GizUtils.getLocale(null));
+        Assert.assertEquals(expectedLocaleNotNull, GizUtils.getLocale(RuntimeEnvironment.application));
+    }
+
 }

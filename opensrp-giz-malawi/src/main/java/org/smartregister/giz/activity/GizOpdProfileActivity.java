@@ -1,26 +1,38 @@
 package org.smartregister.giz.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
+import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.viewpager.widget.ViewPager;
+
+import com.vijay.jsonwizard.constants.JsonFormConstants;
+import com.vijay.jsonwizard.domain.Form;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Years;
+import org.json.JSONObject;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.giz.R;
 import org.smartregister.giz.task.OpdTransferTask;
 import org.smartregister.giz.util.GizConstants;
 import org.smartregister.opd.activity.BaseOpdProfileActivity;
+import org.smartregister.opd.utils.FormProcessor;
 import org.smartregister.opd.utils.OpdDbConstants;
 import org.smartregister.util.Utils;
 
 import java.util.Map;
 
-public class GizOpdProfileActivity extends BaseOpdProfileActivity {
+public class GizOpdProfileActivity extends BaseOpdProfileActivity implements FormProcessor.Host {
+
+    protected static final int REQUEST_CODE_GET_JSON = 3432;
+    private FormProcessor.Requester requester;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,5 +102,44 @@ public class GizOpdProfileActivity extends BaseOpdProfileActivity {
             }
         }
 
+    }
+
+  /*  @Override
+    protected ViewPager setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        NewOpdProfileOverviewFragment profileOverviewFragment = NewOpdProfileOverviewFragment.newInstance(this.getIntent().getExtras());
+        setSendActionListenerForProfileOverview(profileOverviewFragment);
+
+        NewOpdProfileVisitsFragment profileVisitsFragment = NewOpdProfileVisitsFragment.newInstance(this.getIntent().getExtras());
+        setSendActionListenerToVisitsFragment(profileVisitsFragment);
+
+        adapter.addFragment(profileOverviewFragment, this.getString(R.string.today));
+        adapter.addFragment(profileVisitsFragment, this.getString(R.string.history));
+
+        viewPager.setAdapter(adapter);
+        return viewPager;
+    }*/
+
+    @Override
+    public void startForm(JSONObject jsonObject, Form form, FormProcessor.Requester requester) {
+        this.requester = requester;
+        Intent intent = new Intent(getApplicationContext(), org.smartregister.child.util.Utils.metadata().childFormActivity);
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.JSON, jsonObject.toString());
+        intent.putExtra(JsonFormConstants.JSON_FORM_KEY.FORM, form);
+        startActivityForResult(intent, REQUEST_CODE_GET_JSON);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_GET_JSON && resultCode == Activity.RESULT_OK) {
+            String jsonString = data.getStringExtra(JsonFormConstants.JSON_FORM_KEY.JSON);
+            if (jsonString != null && requester != null) {
+                requester.onFormProcessingResult(jsonString);
+                requester = null;
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

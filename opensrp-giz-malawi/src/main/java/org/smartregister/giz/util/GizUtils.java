@@ -21,9 +21,14 @@ import com.vijay.jsonwizard.constants.JsonFormConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.Nullable;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Months;
+import org.joda.time.Years;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.smartregister.CoreLibrary;
 import org.smartregister.anc.library.event.PatientRemovedEvent;
 import org.smartregister.anc.library.repository.PatientRepository;
 import org.smartregister.anc.library.util.ANCJsonFormUtils;
@@ -35,6 +40,7 @@ import org.smartregister.child.util.Constants;
 import org.smartregister.child.util.Utils;
 import org.smartregister.commonregistry.AllCommonsRepository;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
+import org.smartregister.commonregistry.CommonRepository;
 import org.smartregister.domain.Client;
 import org.smartregister.domain.Event;
 import org.smartregister.domain.Obs;
@@ -498,6 +504,152 @@ public class GizUtils extends Utils {
         tempStep.put(JsonFormConstants.FIELDS, jsonArray);
         interactor.processHeight(client.getIdentifiers(), tempForm.toString(), params, clientJson);
         interactor.processWeight(client.getIdentifiers(), tempForm.toString(), params, clientJson);
+    }
+
+    public static String getDuration(DateTime dateTime) {
+        if (dateTime != null) {
+            Calendar dateCalendar = Calendar.getInstance();
+            dateCalendar.setTime(dateTime.toDate());
+            dateCalendar.set(Calendar.HOUR_OF_DAY, 0);
+            dateCalendar.set(Calendar.MINUTE, 0);
+            dateCalendar.set(Calendar.SECOND, 0);
+            dateCalendar.set(Calendar.MILLISECOND, 0);
+
+            Calendar today = Calendar.getInstance();
+            today.set(Calendar.HOUR_OF_DAY, 0);
+            today.set(Calendar.MINUTE, 0);
+            today.set(Calendar.SECOND, 0);
+            today.set(Calendar.MILLISECOND, 0);
+
+            long timeDiff = Math.abs(dateCalendar.getTimeInMillis() - today.getTimeInMillis());
+
+            DateTime todayDateTime = new DateTime();
+            return getDuration(timeDiff, dateTime, todayDateTime, getLocale());
+        }
+        return null;
+    }
+
+    private static Locale getLocale() {
+        Locale locale = CoreLibrary.getInstance().context().applicationContext().getResources().getConfiguration().locale;
+        locale = locale != null ? Locale.ENGLISH : null;
+
+        return locale;
+    }
+
+    public static String getDuration(String date) {
+        DateTime duration;
+        if (StringUtils.isNotBlank(date)) {
+            try {
+                duration = new DateTime(date);
+                return getDuration(duration);
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+        }
+        return "";
+    }
+
+    public static String toCSV(List<String> list) {
+        String result = "";
+        if (list != null && list.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            for (String s : list) {
+                sb.append(s).append(", ");
+            }
+            result = sb.deleteCharAt(sb.length() - 2).toString();
+        }
+        return result;
+    }
+
+    public static String getStringResourceByName(String name, Context context) {
+        String packageName = context.getPackageName();
+        int resId = context.getResources().getIdentifier(name, "string", packageName);
+        if (resId == 0) {
+            return name;
+        } else {
+            return context.getString(resId);
+        }
+    }
+
+    public static CommonRepository getCommonRepository(String tableName) {
+        return Utils.context().commonrepository(tableName);
+    }
+
+    public static String getDuration(long timeDiff, DateTime dateTime, DateTime todayDateTime, Locale locale) {
+
+        Context context = CoreLibrary.getInstance().context().applicationContext();
+        String duration;
+        if (timeDiff >= 0
+                && timeDiff <= TimeUnit.MILLISECONDS.convert(13, TimeUnit.DAYS)) {
+            // Represent in days
+            long days = Math.abs(Days.daysBetween(dateTime.toLocalDate(), todayDateTime.toLocalDate()).getDays());
+            duration = String.format(locale, context.getResources().getString(org.smartregister.R.string.x_days), days);
+        } else if (timeDiff > TimeUnit.MILLISECONDS.convert(13, TimeUnit.DAYS)
+                && timeDiff <= TimeUnit.MILLISECONDS.convert(97, TimeUnit.DAYS)) {
+            // Represent in weeks and days
+            int weeks = (int) Math.floor((float) timeDiff /
+                    TimeUnit.MILLISECONDS.convert(7, TimeUnit.DAYS));
+            int days = (int) Math.floor((float) (timeDiff -
+                    TimeUnit.MILLISECONDS.convert(weeks * 7, TimeUnit.DAYS)) /
+                    TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS));
+
+            if (days >= 7) {
+                days = 0;
+                weeks++;
+            }
+
+            if (days > 0) {
+                duration = String.format(locale, context.getResources().getString(org.smartregister.R.string.x_weeks_days), weeks, days);
+            } else {
+                duration = String.format(locale, context.getResources().getString(org.smartregister.R.string.x_weeks), weeks);
+            }
+
+        } else if (timeDiff > TimeUnit.MILLISECONDS.convert(97, TimeUnit.DAYS)
+                && timeDiff <= TimeUnit.MILLISECONDS.convert(363, TimeUnit.DAYS)) {
+            // Represent in months and weeks
+            int months = (int) Math.floor((float) timeDiff /
+                    TimeUnit.MILLISECONDS.convert(30, TimeUnit.DAYS));
+            int weeks = (int) Math.floor((float) (timeDiff - TimeUnit.MILLISECONDS.convert(
+                    months * 30, TimeUnit.DAYS)) /
+                    TimeUnit.MILLISECONDS.convert(7, TimeUnit.DAYS));
+
+            if (weeks >= 4) {
+                weeks = 0;
+                months++;
+            }
+
+            if (months < 12) {
+                if (weeks > 0) {
+                    duration = String.format(locale, context.getResources().getString(org.smartregister.R.string.x_months_weeks), months, weeks);
+                } else {
+                    duration = String.format(locale, context.getResources().getString(org.smartregister.R.string.x_months), months);
+                }
+            } else {
+                duration = String.format(locale, context.getResources().getString(org.smartregister.R.string.x_years), 1);
+            }
+        } else {
+            // Represent in years and months
+            int years = Math.abs(Years.yearsBetween(dateTime.toLocalDate(), todayDateTime.toLocalDate()).getYears());
+            int totalMonths = Math.abs(Months.monthsBetween(dateTime.toLocalDate(), todayDateTime.toLocalDate()).getMonths());
+            int months = Math.abs(totalMonths - (12 * years));
+
+            if (months > 0) {
+                duration = String.format(locale, context.getResources().getString(org.smartregister.R.string.x_years_months), years, months);
+            } else {
+                duration = String.format(locale, context.getResources().getString(org.smartregister.R.string.x_years), years);
+            }
+        }
+
+        return duration;
+
+    }
+
+    public static String getObsValue(Obs obs) {
+        List<Object> values = obs.getValues();
+        if (values != null && values.size() > 0) {
+            return (String) values.get(0);
+        }
+        return null;
     }
 
 }

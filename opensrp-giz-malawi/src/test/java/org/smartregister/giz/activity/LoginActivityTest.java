@@ -44,7 +44,7 @@ public class LoginActivityTest extends BaseActivityUnitTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        controller = Robolectric.buildActivity(LoginActivity.class).create().start();
+        controller = Robolectric.buildActivity(LoginActivity.class).create().start().resume();
         loginActivity = controller.get();
     }
 

@@ -15,6 +15,10 @@
     <color name="white_dark">#fafafa</color>
     <color name="check_in_bg_grey">#f4f4f4</color>
     <color name="check_in_txt_dark_grey">#686868</color>
+    <color name="medical_text_inner">#212121</color>
+    <color name="colorDarkGrey">#6C7066</color>
+
 
     <color name="list_view_divider_black">@color/black</color>
+    <color name="chw_primary_dark">#0d384e</color>
 </resources>

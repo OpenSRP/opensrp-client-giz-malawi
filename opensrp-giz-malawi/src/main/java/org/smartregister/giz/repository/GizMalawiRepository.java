@@ -34,6 +34,8 @@ import org.smartregister.opd.repository.OpdDiagnosisDetailRepository;
 import org.smartregister.opd.repository.OpdTestConductedRepository;
 import org.smartregister.opd.repository.OpdTreatmentDetailRepository;
 import org.smartregister.opd.repository.OpdVisitRepository;
+import org.smartregister.opd.repository.VisitDetailsRepository;
+import org.smartregister.opd.repository.VisitRepository;
 import org.smartregister.pnc.repository.PncChildRepository;
 import org.smartregister.pnc.repository.PncMedicInfoRepository;
 import org.smartregister.pnc.repository.PncOtherVisitRepository;
@@ -55,6 +57,8 @@ import org.smartregister.repository.UniqueIdRepository;
 import org.smartregister.util.DatabaseMigrationUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -150,7 +154,6 @@ public class GizMalawiRepository extends Repository {
         }
     }
 
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Timber.w("Upgrading database from version %d to %d, which will destroy all old data", oldVersion, newVersion);
@@ -187,6 +190,18 @@ public class GizMalawiRepository extends Repository {
                     upgradeToVersion11CreateHia2IndicatorsRepository(db);
                 case 12:
                     EventClientRepository.createAdditionalColumns(db);
+                    break;
+                case 13:
+                    upgradeToVersion13CreateReasonForDefaultingTable(db);
+                    break;
+                case 14:
+                    upgradeToVersion14UpdateMissingColumns(db);
+                    break;
+                case 15:
+                    upgradeToVersion15TriggerCreateNewTable(db);
+                    break;
+                case 16:
+                    upgradeToVersion16CreateNewVisitTable(db);
                     break;
                 default:
                     break;
@@ -466,6 +481,41 @@ public class GizMalawiRepository extends Repository {
         }
     }
 
+    private void upgradeToVersion13CreateReasonForDefaultingTable(@NonNull SQLiteDatabase db) {
+        try {
+            ReasonForDefaultingRepository.createTable(db);
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion13CreateReasonForDefaultingTable");
+        }
+    }
+
+    private void upgradeToVersion14UpdateMissingColumns(@NonNull SQLiteDatabase db) {
+        db.execSQL(VaccineRepository.UPDATE_TABLE_ADD_IS_VOIDED_COL);
+        db.execSQL(VaccineRepository.UPDATE_TABLE_ADD_IS_VOIDED_COL_INDEX);
+        EventClientRepository.addEventTaskId(db);
+        EventClientRepository.createIndex(db, EventClientRepository.Table.event, EventClientRepository.event_column.values());
+    }
+
+    private void upgradeToVersion15TriggerCreateNewTable(@NonNull SQLiteDatabase db) {
+        try {
+            DatabaseMigrationUtils.createAddedECTables(db,
+                    new HashSet<>(Collections.singletonList("ec_family_member_location")),
+                    GizMalawiApplication.createCommonFtsObject(context));
+
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion15");
+        }
+    }
+
+    private void upgradeToVersion16CreateNewVisitTable(@NonNull SQLiteDatabase db) {
+        try {
+            VisitRepository.createTable(db);
+            VisitDetailsRepository.createTable(db);
+        } catch (Exception e) {
+            Timber.e(e, "upgradeToVersion16");
+        }
+    }
+
     private boolean checkIfAppUpdated() {
         String savedAppVersion = ReportingLibrary.getInstance().getContext().allSharedPreferences().getPreference(appVersionCodePref);
         if (savedAppVersion.isEmpty()) {
@@ -486,6 +536,4 @@ public class GizMalawiRepository extends Repository {
                 .hIA2IndicatorsRepository();
         hIA2IndicatorsRepository.save(db, csvData);
     }
-
-
 }

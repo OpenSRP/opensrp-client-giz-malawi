@@ -6,6 +6,8 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -27,6 +29,7 @@ import org.smartregister.clientandeventmodel.DateUtil;
 import org.smartregister.commonregistry.AllCommonsRepository;
 import org.smartregister.domain.Client;
 import org.smartregister.domain.Event;
+import org.smartregister.domain.Obs;
 import org.smartregister.domain.db.EventClient;
 import org.smartregister.domain.jsonmapping.ClientClassification;
 import org.smartregister.domain.jsonmapping.ClientField;
@@ -34,9 +37,12 @@ import org.smartregister.domain.jsonmapping.Column;
 import org.smartregister.domain.jsonmapping.Table;
 import org.smartregister.giz.application.GizMalawiApplication;
 import org.smartregister.giz.domain.MonthlyTally;
+import org.smartregister.giz.model.ReasonForDefaultingModel;
 import org.smartregister.giz.repository.MonthlyTalliesRepository;
+import org.smartregister.giz.repository.ReasonForDefaultingRepository;
 import org.smartregister.giz.util.AppExecutors;
 import org.smartregister.giz.util.GizConstants;
+import org.smartregister.giz.util.GizReportUtils;
 import org.smartregister.giz.util.GizUtils;
 import org.smartregister.growthmonitoring.domain.Height;
 import org.smartregister.growthmonitoring.domain.Weight;
@@ -57,6 +63,7 @@ import org.smartregister.immunization.service.intent.VaccineIntentService;
 import org.smartregister.maternity.utils.MaternityConstants;
 import org.smartregister.opd.processor.OpdMiniClientProcessorForJava;
 import org.smartregister.opd.utils.OpdConstants;
+import org.smartregister.opd.utils.VisitUtils;
 import org.smartregister.pnc.PncLibrary;
 import org.smartregister.pnc.pojo.PncBaseDetails;
 import org.smartregister.pnc.pojo.PncChild;
@@ -94,7 +101,7 @@ public class GizMalawiProcessorForJava extends ClientProcessorForJava {
             Constants.EventType.NEW_WOMAN_REGISTRATION, OpdConstants.EventType.OPD_REGISTRATION, OpdConstants.EventType.UPDATE_OPD_REGISTRATION,
             Constants.EventType.AEFI, Constants.EventType.ARCHIVE_CHILD_RECORD, ConstantsUtils.EventTypeUtils.ANC_MATERNITY_TRANSFER,
             ConstantsUtils.EventTypeUtils.CLOSE, GizConstants.EventType.OPD_CHILD_TRANSFER, GizConstants.EventType.OPD_MATERNITY_TRANSFER,
-            GizConstants.EventType.OPD_ANC_TRANSFER, GizConstants.EventType.OPD_PNC_TRANSFER);
+            GizConstants.EventType.OPD_ANC_TRANSFER, GizConstants.EventType.OPD_PNC_TRANSFER, GizConstants.EventType.REASON_FOR_DEFAULTING);
 
     private GizMalawiProcessorForJava(Context context) {
         super(context);
@@ -127,6 +134,11 @@ public class GizMalawiProcessorForJava extends ClientProcessorForJava {
     }
 
     @Override
+    public synchronized void processClient(List<EventClient> eventClientList, boolean localSubmission) throws Exception {
+        this.processClient(eventClientList);
+    }
+
+    @Override
     public void processClient(List<EventClient> eventClients) throws Exception {
         ClientClassification clientClassification = assetJsonToJava("ec_client_classification.json",
                 ClientClassification.class);
@@ -147,7 +159,12 @@ public class GizMalawiProcessorForJava extends ClientProcessorForJava {
                     continue;
                 }
 
-                if (eventType.equals(VaccineIntentService.EVENT_TYPE) || eventType
+                if (eventType.equals(OpdConstants.OpdModuleEvents.OPD_CHECK_IN) || eventType.equals(OpdConstants.OpdModuleEvents.OPD_VITAL_DANGER_SIGNS_CHECK)|| eventType.equals(OpdConstants.OpdModuleEvents.OPD_DIAGNOSIS)
+                        || eventType.equals(OpdConstants.OpdModuleEvents.OPD_PHARMACY) || eventType.equals(OpdConstants.OpdModuleEvents.OPD_TREATMENT) || eventType.equals(OpdConstants.OpdModuleEvents.OPD_LABORATORY)
+                        || eventType.equals(OpdConstants.OpdModuleEvents.OPD_FINAL_OUTCOME) || eventType.equals(OpdConstants.OpdModuleEvents.OPD_SERVICE_CHARGE)) {
+                    processVisitEvent(eventClients);
+                }
+                else if (eventType.equals(VaccineIntentService.EVENT_TYPE) || eventType
                         .equals(VaccineIntentService.EVENT_TYPE_OUT_OF_CATCHMENT)) {
                     processVaccinationEvent(vaccineTable, eventClient);
                 } else if (eventType.equals(WeightIntentService.EVENT_TYPE) || eventType
@@ -160,6 +177,8 @@ public class GizMalawiProcessorForJava extends ClientProcessorForJava {
                     processService(eventClient, serviceTable);
                 } else if (eventType.equals(ChildJsonFormUtils.BCG_SCAR_EVENT)) {
                     processBCGScarEvent(eventClient);
+                } else if (eventType.equals(GizConstants.EventType.REASON_FOR_DEFAULTING)) {
+                    clientProcessReasonForDefault(event);
                 } else if (eventType.equals(MoveToMyCatchmentUtils.MOVE_TO_CATCHMENT_EVENT)) {
                     unsyncEvents.add(event);
                 } else if (eventType.equalsIgnoreCase(Constants.EventType.DEATH)) {
@@ -209,11 +228,19 @@ public class GizMalawiProcessorForJava extends ClientProcessorForJava {
             processUnsyncEvents(unsyncEvents);
 
             // Process alerts for clients
-            Runnable runnable = () -> updateClientAlerts(clientsForAlertUpdates);
+            /**
+             Runnable runnable = () -> updateClientAlerts(clientsForAlertUpdates);
 
-            appExecutors.diskIO().execute(runnable);
+             appExecutors.diskIO().execute(runnable);
+             **/
         }
 
+    }
+
+    private void processVisitEvent(List<EventClient> eventClients) {
+        for (EventClient eventClient : eventClients) {
+            VisitUtils.processVisit(eventClient);
+        }
     }
 
     public void processGizCoreEvents(ClientClassification clientClassification, EventClient eventClient, Event event, String eventType) throws Exception {
@@ -407,14 +434,18 @@ public class GizMalawiProcessorForJava extends ClientProcessorForJava {
     }
 
     private void updateClientAlerts(@NonNull HashMap<String, DateTime> clientsForAlertUpdates) {
-        HashMap<String, DateTime> stringDateTimeHashMap = SerializationUtils.clone(clientsForAlertUpdates);
-        for (String baseEntityId : stringDateTimeHashMap.keySet()) {
-            DateTime birthDateTime = clientsForAlertUpdates.get(baseEntityId);
-            if (birthDateTime != null) {
-                updateOfflineAlerts(baseEntityId, birthDateTime);
+        try {
+            HashMap<String, DateTime> stringDateTimeHashMap = SerializationUtils.clone(clientsForAlertUpdates);
+            for (String baseEntityId : stringDateTimeHashMap.keySet()) {
+                DateTime birthDateTime = clientsForAlertUpdates.get(baseEntityId);
+                if (birthDateTime != null) {
+                    updateOfflineAlerts(baseEntityId, birthDateTime);
+                }
             }
+            clientsForAlertUpdates.clear();
+        } catch (Exception ex) {
+            Timber.e(ex);
         }
-        clientsForAlertUpdates.clear();
     }
 
     private boolean processDeathEvent(@NonNull EventClient eventClient, ClientClassification clientClassification) {
@@ -908,4 +939,21 @@ public class GizMalawiProcessorForJava extends ClientProcessorForJava {
             clientsForAlertUpdates.put(baseEntityId, dateTime);
         }
     }
+
+    private void clientProcessReasonForDefault(Event event) throws JsonProcessingException {
+        if (event != null) {
+            List<Obs> reasonForDefaultingObs = event.getObs();
+            ReasonForDefaultingModel reasonForDefaultingModel = GizReportUtils.getReasonForDefaultingModel(reasonForDefaultingObs);
+            reasonForDefaultingModel.setDateCreated(event.getEventDate().toString());
+            reasonForDefaultingModel.setBaseEntityId(event.getBaseEntityId());
+            if (reasonForDefaultingModel != null) {
+                ReasonForDefaultingRepository repo = GizMalawiApplication.getInstance().reasonForDefaultingRepository();
+                String formSubmissionId = event.getFormSubmissionId();
+                reasonForDefaultingModel.setId(formSubmissionId);
+                repo.addOrUpdate(reasonForDefaultingModel);
+            }
+        }
+    }
+
+
 }

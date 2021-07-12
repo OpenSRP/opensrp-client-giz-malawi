@@ -15,8 +15,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 import org.smartregister.child.activity.BaseChildRegisterActivity;
 import org.smartregister.child.model.BaseChildRegisterModel;
-import org.smartregister.child.util.Constants;
 import org.smartregister.child.util.ChildJsonFormUtils;
+import org.smartregister.child.util.Constants;
 import org.smartregister.child.util.Utils;
 import org.smartregister.giz.R;
 import org.smartregister.giz.contract.NavigationMenuContract;
@@ -114,7 +114,7 @@ public class ChildRegisterActivity extends BaseChildRegisterActivity implements 
         createDrawer();
     }
 
-    private void createDrawer() {
+    protected void createDrawer() {
         WeakReference<ChildRegisterActivity> childRegisterActivityWeakReference = new WeakReference<>(this);
         navigationMenu = NavigationMenu.getInstance(childRegisterActivityWeakReference.get(), null, null);
         navigationMenu.getNavigationAdapter().setSelectedView(GizConstants.DrawerMenu.CHILD_CLIENTS);

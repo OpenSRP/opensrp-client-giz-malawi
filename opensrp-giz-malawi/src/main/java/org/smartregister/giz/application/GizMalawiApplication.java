@@ -15,6 +15,8 @@ import com.evernote.android.job.JobManager;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.smartregister.Context;
 import org.smartregister.CoreLibrary;
 import org.smartregister.anc.library.AncLibrary;
@@ -66,6 +68,7 @@ import org.smartregister.giz.repository.GizHia2ReportRepository;
 import org.smartregister.giz.repository.GizMalawiRepository;
 import org.smartregister.giz.repository.HIA2IndicatorsRepository;
 import org.smartregister.giz.repository.MonthlyTalliesRepository;
+import org.smartregister.giz.repository.ReasonForDefaultingRepository;
 import org.smartregister.giz.util.AppExecutors;
 import org.smartregister.giz.util.GizConstants;
 import org.smartregister.giz.util.GizOpdRegisterProviderMetadata;
@@ -113,6 +116,7 @@ import org.smartregister.repository.Repository;
 import org.smartregister.sync.ClientProcessorForJava;
 import org.smartregister.sync.DrishtiSyncScheduler;
 import org.smartregister.sync.helper.ECSyncHelper;
+import org.smartregister.util.NativeFormProcessor;
 import org.smartregister.view.activity.DrishtiApplication;
 import org.smartregister.view.receiver.TimeChangedBroadcastReceiver;
 
@@ -150,6 +154,9 @@ public class GizMalawiApplication extends DrishtiApplication implements TimeChan
     private ChildAlertUpdatedRepository childAlertUpdatedRepository;
     private GizEventRepository gizEventRepository;
     private AppExecutors appExecutors;
+    private ReasonForDefaultingRepository reasonForDefaultingRepository;
+   // private VisitRepository visitRepository;
+   // private VisitDetailsRepository visitDetailsRepository;
 
     public static JsonSpecHelper getJsonSpecHelper() {
         return jsonSpecHelper;
@@ -346,6 +353,7 @@ public class GizMalawiApplication extends DrishtiApplication implements TimeChan
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         initMinimumDateForReportGeneration();
+
     }
 
     private void initMinimumDateForReportGeneration() {
@@ -424,6 +432,22 @@ public class GizMalawiApplication extends DrishtiApplication implements TimeChan
                 .build();
 
         OpdLibrary.init(context, getRepository(), opdConfiguration, BuildConfig.VERSION_CODE, BuildConfig.DATABASE_VERSION);
+        OpdLibrary.initializeFormFactory(new OpdLibrary.NativeFormProcessorFactory() {
+            @Override
+            public NativeFormProcessor createInstance(String s) throws JSONException {
+                return NativeFormProcessor.createInstance(s, BuildConfig.DATABASE_VERSION, getClientProcessor());
+            }
+
+            @Override
+            public NativeFormProcessor createInstance(JSONObject jsonObject) {
+                return NativeFormProcessor.createInstance(jsonObject, BuildConfig.DATABASE_VERSION, getClientProcessor());
+            }
+
+            @Override
+            public NativeFormProcessor createInstanceFromAsset(String s) throws JSONException  {
+                return NativeFormProcessor.createInstanceFromAsset(s, BuildConfig.DATABASE_VERSION, getClientProcessor());
+            }
+        });
     }
 
     private ChildMetadata getMetadata() {
@@ -579,11 +603,11 @@ public class GizMalawiApplication extends DrishtiApplication implements TimeChan
 
     @VisibleForTesting
     protected void fixHardcodedVaccineConfiguration() {
-        VaccineRepo.Vaccine[] vaccines = ImmunizationLibrary.getInstance().getVaccines();
+        VaccineRepo.Vaccine[] vaccines = ImmunizationLibrary.getInstance().getVaccines(GizConstants.KEY.CHILD);
 
         HashMap<String, VaccineDuplicate> replacementVaccines = new HashMap<>();
-        replacementVaccines.put("MR 2", new VaccineDuplicate("MR 2", VaccineRepo.Vaccine.mr1, -1, 548, 183, "child"));
-        replacementVaccines.put("BCG 2", new VaccineDuplicate("BCG 2", VaccineRepo.Vaccine.bcg, 1825, 0, 42, "child"));
+        replacementVaccines.put("MR 2", new VaccineDuplicate("MR 2", VaccineRepo.Vaccine.mr1, -1, 548, 183, GizConstants.KEY.CHILD));
+        replacementVaccines.put("BCG 2", new VaccineDuplicate("BCG 2", VaccineRepo.Vaccine.bcg, 1825, 0, 42, GizConstants.KEY.CHILD));
 
         for (VaccineRepo.Vaccine vaccine : vaccines) {
             if (replacementVaccines.containsKey(vaccine.display())) {
@@ -597,7 +621,7 @@ public class GizMalawiApplication extends DrishtiApplication implements TimeChan
             }
         }
 
-        ImmunizationLibrary.getInstance().setVaccines(vaccines);
+        ImmunizationLibrary.getInstance().setVaccines(vaccines, GizConstants.KEY.CHILD);
     }
 
     public DailyTalliesRepository dailyTalliesRepository() {
@@ -661,5 +685,36 @@ public class GizMalawiApplication extends DrishtiApplication implements TimeChan
         }
         return appExecutors;
     }
+
+    public ReasonForDefaultingRepository reasonForDefaultingRepository() {
+        if (reasonForDefaultingRepository == null) {
+            this.reasonForDefaultingRepository = new ReasonForDefaultingRepository();
+        }
+        return this.reasonForDefaultingRepository;
+    }
+
+   /* public VisitRepository visitRepository() {
+        if (visitRepository == null) {
+            visitRepository = new VisitRepository();
+        }
+        return visitRepository;
+    }
+
+    public VisitDetailsRepository visitDetailsRepository() {
+        if (visitDetailsRepository == null) {
+            visitDetailsRepository = new VisitDetailsRepository();
+        }
+        return visitDetailsRepository;
+    }*/
+
+
+    public Integer getApplicationVersion(){
+        return BuildConfig.VERSION_CODE;
+    }
+
+    public Integer getDatabaseVersion(){
+        return BuildConfig.DATABASE_VERSION;
+    }
+
 }
 

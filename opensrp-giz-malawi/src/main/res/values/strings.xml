@@ -886,4 +886,30 @@
     <string name="opd_register_other_clients">Register Other Clients</string>
     <string name="opd_register_child_under_5">Register Child Under 5</string>
     <!-- End PNC report labels -->
+
+    <!-- Emmunize Reports-->
+    <string name="reports_type">Reports</string>
+    <string name="dhis2_report_grouping_title">DHIS2 Reports</string>
+    <string name="child_due_report_grouping_title"> Children Due for Vaccination</string>
+    <string name="vaccine_needed_report_grouping_title">Vaccine Doses Needed</string>
+    <string name="select_community">Select Community</string>
+    <string name="select_options">Select options</string>
+    <string name="outreach_date">Date</string>
+    <string name="view_report">View Report</string>
+    <string name="due">Due </string>
+    <string name="family">Family</string>
+    <string name="date">Date</string>
+    <string name="vaccine_doses_needed">Vaccine Doses Needed</string>
+
+    <string name="mr">MR</string>
+    <string name="mv">MV</string>
+    <string name="rota">ROTA</string>
+
+    <string name="reason_for_defaulting">Record reason for defaulting</string>
+    <string name="report_lost_card">Report Lost or Damaged Card</string>
+    <string name="new_card_ordered">Report lost or damaged card \n (new card on order)</string>
+
+    <string name="compliance">Compliance</string>
+    <string name="due_on">Due on</string>
+    <string name="no_village_selected">"No Village selected"</string>
 </resources>
